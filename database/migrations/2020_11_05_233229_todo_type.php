@@ -19,6 +19,8 @@ class TodoType extends Migration
             $table->string("name");
             $table->string("description");
             $table->boolean("mandatory");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

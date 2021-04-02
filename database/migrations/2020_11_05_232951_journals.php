@@ -23,6 +23,8 @@ class Journals extends Migration
             $table->integer("status");
             $table->date("start");
             $table->date("end");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

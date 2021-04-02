@@ -20,6 +20,8 @@ class Staffs extends Migration
             $table->string("password");
             $table->string("phone", 12);
             $table->string("hospital_id");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

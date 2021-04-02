@@ -21,6 +21,8 @@ class PattientTest extends Migration
             $table->unsignedTinyInteger("result");
             $table->unsignedTinyInteger("case");
             $table->unsignedTinyInteger("journal")->default(0);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

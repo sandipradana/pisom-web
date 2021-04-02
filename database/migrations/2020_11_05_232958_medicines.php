@@ -16,6 +16,8 @@ class Medicines extends Migration
         Schema::create('medicines', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

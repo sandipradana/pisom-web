@@ -17,6 +17,8 @@ class PattientMedicine extends Migration
             $table->id();
             $table->integer("patient_id");
             $table->integer("medicine_id");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

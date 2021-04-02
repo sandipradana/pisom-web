@@ -21,6 +21,8 @@ class News extends Migration
             $table->string("thumbnail");
             $table->boolean("featured")->default(false);
             $table->date("date");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

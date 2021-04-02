@@ -16,6 +16,8 @@ class Cormodbids extends Migration
         Schema::create('cormobids', function (Blueprint $table) {
             $table->id();
             $table->string("name", 255);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

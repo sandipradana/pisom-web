@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'patient',
     ],
 
     /*
@@ -36,15 +36,30 @@ return [
     */
 
     'guards' => [
+        
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'patient',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+            'provider' => 'patient',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
+
+        'staff' => [
+            'driver' => 'session',
+            'provider' => 'staff',
+        ],
+
+        'patient' => [
+            'driver' => 'session',
+            'provider' => 'patient',
         ],
     ],
 
@@ -66,15 +81,22 @@ return [
     */
 
     'providers' => [
-        'users' => [
+
+        'patient' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Patient::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'staff' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Staff::class,
+        ],
+
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+        
     ],
 
     /*

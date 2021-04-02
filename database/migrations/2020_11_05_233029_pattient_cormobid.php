@@ -17,6 +17,8 @@ class PattientCormobid extends Migration
             $table->id();
             $table->integer("patient_id");
             $table->integer("cormobid_id");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

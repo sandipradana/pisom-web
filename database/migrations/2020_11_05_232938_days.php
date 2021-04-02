@@ -20,6 +20,8 @@ class Days extends Migration
             $table->integer("journal_id");
             $table->integer("symptom_status");
             $table->integer("todo_status");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

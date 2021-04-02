@@ -25,6 +25,8 @@ class Pattients extends Migration
             $table->unsignedTinyInteger("gender");
             $table->integer("hospital_id");
             $table->integer("staff_id");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

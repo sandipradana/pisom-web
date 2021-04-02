@@ -18,7 +18,9 @@ class Admins extends Migration
             $table->string("name");
             $table->string("email");
             $table->string("password");
-            $table->string("phone", 12);
+            $table->string("phone", 15);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

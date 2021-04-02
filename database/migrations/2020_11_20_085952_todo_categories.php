@@ -16,6 +16,8 @@ class TodoCategories extends Migration
         Schema::create('todo_categories', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

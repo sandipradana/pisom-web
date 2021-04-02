@@ -17,9 +17,11 @@ class Todos extends Migration
             $table->id();
             $table->integer("todo_type_id");
             $table->integer("todo_category_id");
-			$table->integer("day_id");
-            $table->boolean("status");
             $table->string("data")->nullable();
+            $table->integer("day_id");
+            $table->boolean("status");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

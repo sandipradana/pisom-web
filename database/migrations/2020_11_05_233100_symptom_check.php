@@ -19,6 +19,8 @@ class SymptomCheck extends Migration
             $table->integer("symptom_id");
             $table->string("data")->nullable();
             $table->unsignedTinyInteger("status");
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
