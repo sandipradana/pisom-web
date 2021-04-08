@@ -31,7 +31,6 @@ xtends('admin.layout')
 		</div>
 	</div>
 </div>
-
 @endsection
 
 @push('scripts')

@@ -10,4 +10,8 @@ class HomeController extends Controller
     function index(){
         return view('guest.home.index');
     }
+
+    function download(){
+        
+    }
 }

@@ -19,10 +19,10 @@ class MenuStaff
     {
         Menu::make('MainMenu', function ($menu) {
 
-            $menu->add('Dashboard', ['route'  => 'staff.home.index']);
-            $menu->add('Pasien', ['route'  => 'staff.patient.index']);
-            $menu->add('Test', ['route'  => 'staff.test.index']);
-            $menu->add('Isolation', ['route'  => 'staff.isolation.index']);
+            $menu->add('Dashboard', ['route'  => 'staff.home.index'])->data('icon', 'home');
+            $menu->add('Pasien', ['route'  => 'staff.patient.index'])->data('icon', 'users');
+            $menu->add('Test', ['route'  => 'staff.test.index'])->data('icon', 'stethoscope');
+            $menu->add('Isolation', ['route'  => 'staff.isolation.index'])->data('icon', 'house-user');
 
         });
 

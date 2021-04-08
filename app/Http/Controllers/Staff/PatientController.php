@@ -10,6 +10,7 @@ use App\Models\Patient;
 use App\Models\Journal;
 use App\Models\PatientCormobid;
 use App\Models\Day;
+use App\Models\Hospital;
 use App\Models\Todo;
 use App\Models\SymptomCheck;
 use App\Models\PatientTest;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Medicine;
 use App\Models\PatientMedicine;
+use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
 
 class PatientController extends Controller
@@ -29,9 +31,7 @@ class PatientController extends Controller
 
     public function dataTable($query)
     {
-        return datatables()
-            ->eloquent($query)
-            ->addColumn('action', 'users.action');
+        return datatables()->eloquent($query)->addColumn('action', 'users.action');
     }
 
     public function create(){
@@ -115,6 +115,16 @@ class PatientController extends Controller
         return redirect()->route('staff.patient.index');
     }
 
+    public function print($id){
+
+        $patient    = Patient::find($id);
+        $hospital   = Hospital::find($patient->hospital_id);
+        $staff      = Staff::find(Auth::guard('staff')->user()->id);
+        $cormobids  = PatientCormobid::findByPatient($patient->id);
+        
+        return view('staff.patient.print', compact('patient', 'hospital', 'staff', 'cormobids'));
+    }
+
     public function report($id){
         $patient    = Patient::with('staff', 'hospital')->findOrFail($id);
         $journal   = Journal::where('patient_id', $patient->id)->orderBy('id', 'desc')->first();
@@ -123,7 +133,7 @@ class PatientController extends Controller
             return redirect()->back();
         }
 
-        $tests       = PatientTest::with('type')->where('patient_id', $patient->id)->orderBy('id', 'desc')->get();
+        $tests      = PatientTest::with('type')->where('patient_id', $patient->id)->orderBy('id', 'desc')->get();
         $cormobids  = PatientCormobid::with(['cormobid'])->where('patient_id', $patient->id)->get();
         $staff      = Auth::guard('staff')->user();
 

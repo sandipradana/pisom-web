@@ -1,6 +1,6 @@
 @extends('staff.layout')
 
-@section('title', 'Page Title')
+@section('title', 'Isolasi')
 
 @section('content')
 <div class="row">
