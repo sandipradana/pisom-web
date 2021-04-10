@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\Request;
 
 class StaffPatientDataTable extends DataTable
 {
@@ -17,9 +18,9 @@ class StaffPatientDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable(Request $request, $query)
     {
-         return datatables()
+        return datatables()
             ->eloquent($query)
             ->addColumn('action', '
             <a href="{{ route("staff.patient.detail", $id) }}">
@@ -43,9 +44,16 @@ class StaffPatientDataTable extends DataTable
      * @param \App\Models\Patient $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Patient $model)
+    public function query(Request $request, Patient $model)
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+
+        if ($request->has('filter_date_start') && $request->has('filter_date_end')) {
+            if($request->filter_date_start !== null AND $request->filter_date_end !== null) 
+                $query->whereBetween('created_at', [date('Y-m-d', strtotime($request->filter_date_start)), date('Y-m-d', strtotime($request->filter_date_end))])->get();
+        }
+
+        return $query;
     }
 
     /**
@@ -56,14 +64,14 @@ class StaffPatientDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('patient-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                    );
+            ->setTableId('patient-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+            );
     }
 
     /**

@@ -11,7 +11,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>Kode Pasien</label>
-                        <input id="patient_id" name="patient_id" type="text" class="form-control" placeholder="Kode Pasien">
+                        <input id="patient_id" name="patient_id" type="text" class="form-control" value="{{ $patient_id }}" placeholder="Kode Pasien">
                     </div>
                     <div class="form-group">
                         <label>Nama Pasien</label>
@@ -51,6 +51,12 @@
 
 @push('scripts')
 <script>
+    $.get("/api/patient/" + $("#patient_id").val(), function(data) {
+        $("#patient_name").val(data.name);
+    }).fail(function() {
+        $("#patient_name").val("-");
+    });
+    
     $("#patient_id").on('input', function() {
         $.get("/api/patient/" + $("#patient_id").val(), function(data) {
             $("#patient_name").val(data.name);

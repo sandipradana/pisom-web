@@ -24,9 +24,9 @@ class TestController extends Controller
             ->addColumn('action', 'users.action');
     }
 
-    public function create(){
+    public function create($patient_id = 0){
         $testTypes = TestType::all();
-        return view('staff.test.create', compact(['testTypes']));
+        return view('staff.test.create', compact(['testTypes', 'patient_id']));
     }
 
     public function store(Request $request){

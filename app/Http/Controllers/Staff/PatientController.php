@@ -72,7 +72,7 @@ class PatientController extends Controller
         $patient            = Patient::with(['hospital', 'staff'])->findOrFail($id);
         $journals           = Journal::where('patient_id', $patient->id)->orderBy('id', 'desc')->get();
 
-        return view('staff.patient.detail', compact(['patient', 'journals', 'tests']));
+        return view('staff.patient.detail', compact(['patient', 'journals']));
     }
 
     public function journal(Request $request, $id){
@@ -160,14 +160,29 @@ class PatientController extends Controller
         return redirect()->route('staff.patient.index');
     }
 
-    public function print($id){
+    public function print(Request $request, Patient $model){
+
+        $query = $model->newQuery();
+
+        if ($request->has('filter_date_start') && $request->has('filter_date_end')) {
+            if($request->filter_date_start !== null AND $request->filter_date_end !== null) 
+                $query->whereBetween('created_at', [date('Y-m-d', strtotime($request->filter_date_start)), date('Y-m-d', strtotime($request->filter_date_end))])->get();
+        }
+
+        $patients    = $query->get();
+        $staff      = Staff::find(Auth::guard('staff')->user()->id);
+        
+        return view('staff.patient.print', compact('patients', 'staff'));
+    }
+
+    public function printDetail($id){
 
         $patient    = Patient::find($id);
         $hospital   = Hospital::find($patient->hospital_id);
         $staff      = Staff::find(Auth::guard('staff')->user()->id);
         $cormobids  = PatientCormobid::findByPatient($patient->id);
         
-        return view('staff.patient.print', compact('patient', 'hospital', 'staff', 'cormobids'));
+        return view('staff.patient.print-detail', compact('patient', 'hospital', 'staff', 'cormobids'));
     }
 
     public function report($id){

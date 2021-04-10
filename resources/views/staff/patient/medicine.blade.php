@@ -12,18 +12,18 @@
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>Nama Penyakit</td>
+                            <td>Nama Obat</td>
                             <td>Aksi</td>
                         </tr>
                     </thead>
                     <tbody>
                     <tbody>
                         <?php $i = 1; ?>
-                        @foreach($patient_cormobid as $cormobid)
+                        @foreach($patient_medicine as $medicine)
                         <tr>
                             <td width="10px">{{ $i }}</td>
-                            <td><b>{{ $cormobid->cormobid->name }}</b></td>
-                            <td><a href="{{ route('staff.patient.cormobid.delete', [$patient->id, $cormobid->id]) }}">Delete</a></td>
+                            <td><b>{{ $medicine->medicine->name }}</b></td>
+                            <td><a href="{{ route('staff.patient.medicine.delete', [$patient->id, $medicine->id]) }}">Delete</a></td>
                         </tr>
                         <?php $i++; ?>
                         @endforeach
@@ -37,11 +37,11 @@
             <div class="card-body">
                 <form method="post" action="{{ route('staff.patient.cormobid.add', $patient->id) }}">
                     {{ csrf_field() }}
-                    <label class="form-label">Tambah Penyakit Bawaan</label>
+                    <label class="form-label">Tambah Obat</label>
                     <select name="cormobidId" class="form-control form-sm">
-                        <option value="-">Pilih Penyakit</option>
-                        @foreach($cormobids as $cormobid)
-                        <option value="{{ $cormobid->id }}">{{ $cormobid->name }}</option>
+                        <option value="-">Pilih Obat</option>
+                        @foreach($medicines as $medicine)
+                        <option value="{{ $medicine->id }}">{{ $medicine->name }}</option>
                         @endforeach
                     </select>
                     <input type="submit" class="btn btn-danger btn-block mt-2" readonly class="form-control" value="Tambah">

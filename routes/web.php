@@ -147,8 +147,9 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
 
         Route::get('/patient', 'PatientController@index')->name('patient.index');
         Route::post('/patient', 'PatientController@datatable')->name('patient.datatable');
+        Route::get('/patient/print', 'PatientController@print')->name('patient.print');
         Route::get('/patient/detail/{id}', 'PatientController@detail')->name('patient.detail');
-        Route::get('/patient/detail/{id}/print', 'PatientController@print')->name('patient.detail.print');
+        Route::get('/patient/detail/{id}/print', 'PatientController@printDetail')->name('patient.detail.print');
         Route::get('/patient/create', 'PatientController@create')->name('patient.create');
         Route::post('/patient/create', 'PatientController@store')->name('patient.store');
         Route::get('/patient/edit/{id}', 'PatientController@edit')->name('patient.edit');
@@ -174,6 +175,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::get('/test/detail/{id}', 'TestController@detail')->name('test.detail');
         Route::get('/test/delete/{id}', 'TestController@destroy')->name('test.destroy');
         Route::get('/test/report/{id}', 'TestController@report')->name('test.report');
+        Route::get('/test/print', 'TestController@print')->name('test.print');
           
         Route::get('/isolasi', 'IsolationController@index')->name('isolation.index');
         Route::post('/isolasi', 'IsolationController@datatable')->name('isolation.datatable');
