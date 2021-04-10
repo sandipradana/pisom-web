@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-4 col-6">
         <div class="small-box bg-info">
             <div class="inner">
                 <h3>{{ $total['patient'] }}</h3>
@@ -16,7 +16,7 @@
             <a href="{{ route('staff.patient.index') }}" class="small-box-footer">Info lanjut <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-4 col-6">
         <div class="small-box bg-success">
             <div class="inner">
                 <h3>{{ $total['test'] }}</h3>
@@ -28,7 +28,7 @@
             <a href="{{ route('staff.test.index') }}" class="small-box-footer">Info lanjut <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-6">
+    <div class="col-lg-4 col-6">
         <div class="small-box bg-warning">
             <div class="inner">
                 <h3>{{ $total['isolation'] }}</h3>
@@ -40,54 +40,8 @@
             <a href="{{ route('staff.isolation.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-6">
-        <div class="small-box bg-danger">
-            <div class="inner">
-                <h3>65</h3>
-
-                <p>Unique Visitors</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        <div class="card bg-primary text-white mb-4">
-            <div class="card-body">Total Pasien
-                <h1 class="card-title">{{ $total['patient'] }}</h1>
-            </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="{{ route('staff.patient.index') }}">View Details</a>
-                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-primary text-white mb-4">
-            <div class="card-body">Total Test
-                <h1 class="card-title">{{ $total['test'] }}</h1>
-            </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="{{ route('staff.test.index') }}">View Details</a>
-                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-primary text-white mb-4">
-            <div class="card-body">Total Journal
-                <h1 class="card-title">{{ $total['isolation'] }}</h1>
-            </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="{{ route('staff.isolation.index') }}">View Details</a>
-                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
-        </div>
-    </div>
     <div class="col-md-4">
         <div class="card mb-4 p-2">
             <canvas id="patient" height="400"></canvas>

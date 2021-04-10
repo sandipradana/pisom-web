@@ -5,6 +5,14 @@
 
 @section('content')
 <div class="row">
+  <div class="col-12 col-sm-12 col-md-12 mb-1">
+    <div class="card">
+      <div class="card-body">
+        <div id="map" style="height: 400px;"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="col-12 col-sm-6 col-md-3">
     <div class="info-box">
       <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
@@ -66,4 +74,19 @@
   <!-- /.col -->
 </div>
 <!-- /.row -->
+
 @endsection
+
+@push('scripts')
+<script>
+  $(document).ready(function() {
+
+    $(function() {
+      new jvm.Map({
+        map: 'indonesia_id',
+        container: $('#map'),
+      });
+    });
+  });
+</script>
+@endpush

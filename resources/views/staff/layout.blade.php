@@ -19,8 +19,6 @@
     <link rel="stylesheet" href="/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <link rel="stylesheet" href="/adminlte/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-
 </head>
 
 <body class="hold-transition sidebar-mini text-sm">
@@ -38,95 +36,70 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
+                        <a href="{{ route('staff.account.profile') }}" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i> Profil Saya
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-lock mr-2"></i> Ganti Password
+                        <a href="{{ route('staff.auth.logout') }}" class="dropdown-item">
+                            <i class="fas fa-lock mr-2"></i> Logout
                         </a>
                     </div>
                 </li>
             </ul>
         </nav>
         <aside class="main-sidebar sidebar-light-danger elevation-4">
-            <!-- Brand Logo -->
             <a href="{{ route('staff.home.index') }}" class="brand-link navbar-danger">
                 <img src="/adminlte/dist/img/AdminLTELogo.png" alt="PISOM" class="brand-image img-circle">
                 <span class="brand-text font-weight-normal text-white" style="letter-spacing: .2rem">PISOM</span>
             </a>
-
-            <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">{{ auth()->guard('staff')->user()->name }}</a>
+                    <div class="info pl-4">
+                        <a href="#" class="d-block"><b>{{ auth()->guard('staff')->user()->name }}</b></a>
+                        <a href="#" class="d-block">{{ auth()->guard('staff')->user()->email }}</a>
                     </div>
                 </div>
-
-                <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar nav-legacy nav-compact flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         @include('staff.menu-main', ['items' => $MainMenu->roots()])
                     </ul>
                 </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
         </aside>
 
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0 text-dark">@yield('title') <small>@yield('sub-title')</small></h1>
-                        </div><!-- /.col -->
+                        </div>
                         <div class="col-sm-6">
                             @yield('breadcrumb')
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- /.content-header -->
-
-            <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
                     @yield('content')
-                </div><!-- /.container-fluid -->
+                </div>
             </div>
             <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
-
-        <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
             <div class="p-3">
                 <h5>Title</h5>
                 <p>Sidebar content</p>
             </div>
         </aside>
-        <!-- /.control-sidebar -->
-
-        <!-- Main Footer -->
         <footer class="main-footer text-sm">
-            <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
                 Pisom Team
             </div>
-            <!-- Default to the left -->
             <strong>Copyright &copy; 2020-2021 <a href="https://pisom.xyz">pizom.xyz</a>.</strong> All rights reserved.
         </footer>
     </div>
-    <!-- ./wrapper -->
 
     <script src="/adminlte/plugins/jquery/jquery.min.js"></script>
     <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

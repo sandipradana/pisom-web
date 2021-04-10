@@ -79,7 +79,22 @@
     </div>
     <div class="col-md-12">
         <div class="card">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    @include('staff.menu-tab', ['items' => $TabMenu->roots()])
+                </ul>
+            </div>
             <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="activity">
+                      fwef
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                @include('staff.menu-main', ['items' => $MainMenu->roots()])
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" href="#satu" role="tab" data-toggle="tab">Jurnal Pasien</a>
@@ -109,63 +124,11 @@
                         </table>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="tiga">
-                        <table class="table table-sm">
-                            <tbody>
-                                <tr>
-                                    <td>Test ID</td>
-                                    <td>Jenis Test</td>
-                                    <td>Derajat</td>
-                                    <td>Tanggal</td>
-                                    <td>Hasil</td>
-                                </tr>
-                                @foreach($tests as $test)
-                                <tr>
-                                    <td><b>{{ $test->id }}</b></td>
-                                    <td>{{ $test->type->name }}</b></td>
-                                    <td>{{ ['-', 'OTG', 'Ringan'][(int) $test->case] }}</td>
-                                    <td>{{ $test->date }}</td>
-                                    <td>{{ ['Negatif', 'Positif', 'Sembuh'][(int) $test->result - 1] }}</td>
-                                    <td><a href="{{ route('staff.test.detail', $journal->id) }}">View</a></td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="empat">
                         <br />
-                        <form method="post" action="{{ route('staff.patient.cormobid.add', $patient->id) }}">
-                            {{ csrf_field() }}
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Penyakit Bawaan</label>
-                                <div class="col-sm-8">
-                                    <select name="cormobidId" class="form-control">
-                                        <option value="-">Pilih Penyakit</option>
-                                        @foreach($cormobids as $cormobid)
-                                        <option value="{{ $cormobid->id }}">{{ $cormobid->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="submit" readonly class="form-control" value="Tambah">
-                                </div>
-                            </div>
-                        </form>
-                        <table class="table table-sm">
-                            <tbody>
-                                <?php $i = 1; ?>
-                                @foreach($patient_cormobid as $cormobid)
-                                <tr>
-                                    <td width="10px">{{ $i }}</td>
-                                    <td><b>{{ $cormobid->cormobid->name }}</b></td>
-                                    <td><a href="{{ route('staff.patient.cormobid.delete', [$patient->id, $cormobid->id]) }}">Delete</a></td>
-                                </tr>
-                                <?php $i++; ?>
-                                @endforeach
-                            </tbody>
-                        </table>
+
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="lima">
                         <br />

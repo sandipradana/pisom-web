@@ -21,9 +21,22 @@ use App\Models\Medicine;
 use App\Models\PatientMedicine;
 use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
+use Menu;
 
 class PatientController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        if($request->segment(4) !== null){
+            Menu::make('TabMenu', function ($menu) use($request) {
+                $menu->add('Jurnal Pasien', ['route'  => ['staff.patient.detail', $request->segment(4)]]);
+                $menu->add('Riwayat Test', ['route'  => ['staff.patient.test', $request->segment(4)]]);
+                $menu->add('Penyakit Bawaan', ['route'  => ['staff.patient.cormobid', $request->segment(4)]]);
+                $menu->add('Resep Obat', ['route'  => ['staff.patient.medicine', $request->segment(4)]]);
+            });
+        }
+    }
+
     public function index(MainDataTable $dataTable)
     {
         return $dataTable->render('staff.patient.index');
@@ -55,17 +68,49 @@ class PatientController extends Controller
         return redirect()->route('staff.patient.detail', $patient->id);
     }
 
-    public function detail($id){
-
+    public function detail(Request $request, $id){
         $patient            = Patient::with(['hospital', 'staff'])->findOrFail($id);
         $journals           = Journal::where('patient_id', $patient->id)->orderBy('id', 'desc')->get();
+
+        return view('staff.patient.detail', compact(['patient', 'journals', 'tests']));
+    }
+
+    public function journal(Request $request, $id){
+        $patient    = Patient::with(['hospital', 'staff'])->findOrFail($id);
+
+        return view('staff.patient.test', compact(['patient']));
+    }
+
+    public function test(Request $request, $id){
+        $patient    = Patient::with(['hospital', 'staff'])->findOrFail($id);
+        $tests      = PatientTest::with(['type'])->where('patient_id', $patient->id)->get();
+
+        return view('staff.patient.test', compact(['patient', 'tests']));
+    }
+
+    public function cormobid(Request $request, $id){
+        $patient            = Patient::with(['hospital', 'staff'])->findOrFail($id);
         $patient_cormobid   = PatientCormobid::with(['cormobid'])->where('patient_id', $patient->id)->get();
         $cormobids          = Cormobid::all();
-        $tests              = PatientTest::with(['type'])->where('patient_id', $patient->id)->get();
+
+        return view('staff.patient.cormobid', compact(['patient', 'patient_cormobid', 'cormobids']));
+    }
+
+    public function medicine(Request $request, $id){
+        $patient            = Patient::with(['hospital', 'staff'])->findOrFail($id);
         $medicines          = Medicine::all();
         $patient_medicine   = PatientMedicine::with(['medicine'])->where('patient_id', $patient->id)->get();
     
-        return view('staff.patient.detail', compact(['patient', 'journals', 'patient_cormobid', 'cormobids', 'tests', 'medicines', 'patient_medicine']));
+        return view('staff.patient.medicine', compact(['patient', 'medicines', 'patient_medicine']));
+    }
+
+    public function edit($id){
+        $patient = Patient::with(['hospital', 'staff'])->findOrFail($id);
+        return view('staff.patient.edit', compact('patient'));
+    }
+
+    public function update(Request $request, $id){
+        
     }
 
     public function addCormobid(Request $request, $id){

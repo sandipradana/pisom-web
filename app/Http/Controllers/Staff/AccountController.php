@@ -13,5 +13,10 @@ class AccountController extends Controller
 		$user = Auth::guard('staff')->user();
 		return view('staff.account.profile', compact(['user']));
 	}
+
+	public function update(Request $request){
+		$user = Auth::guard('staff')->user();
+		return view('staff.account.profile', compact(['user']));
+	}
 	
 }

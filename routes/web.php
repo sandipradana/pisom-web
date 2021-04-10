@@ -156,6 +156,11 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::get('/patient/delete/{id}', 'PatientController@destroy')->name('patient.destroy');
         Route::get('/patient/report/{id}', 'PatientController@report')->name('patient.report');
 
+        Route::get('/patient/journal/{id}', 'PatientController@journal')->name('patient.journal');
+        Route::get('/patient/cormobid/{id}', 'PatientController@cormobid')->name('patient.cormobid');
+        Route::get('/patient/medicine/{id}', 'PatientController@medicine')->name('patient.medicine');
+        Route::get('/patient/test/{id}', 'PatientController@test')->name('patient.test');
+
         Route::get('/patient/{id}/cormobid/delete/{idCormobid}', 'PatientController@deleteCormobid')->name('patient.cormobid.delete');
         Route::post('/patient/{id}/cormobid/add', 'PatientController@addCormobid')->name('patient.cormobid.add');
 
@@ -180,5 +185,6 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::get('/isolasi/{id}/todo/detail/{dayId}', 'IsolationController@detailTodo')->name('isolation.todo.detail');
         
         Route::get('/account/profile', 'AccountController@profile')->name('account.profile');
+        Route::post('/account/profile', 'AccountController@update')->name('account.update');
     });
 });

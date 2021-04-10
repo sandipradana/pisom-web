@@ -1,7 +1,7 @@
 @extends('staff.layout')
 
 @section('title', 'Pasien')
-@section('sub-title', 'Detil')
+@section('sub-title', 'Edit')
 
 @section('content')
 <div class="row">
@@ -77,21 +77,25 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                    @include('staff.menu-tab', ['items' => $TabMenu->roots()])
-                </ul>
-            </div>
-            <div class="card-body p-0">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="activity">
-                        @yield('sub-content')
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
+
+@section('breadcrumb')
+<div style="float: right;">
+    <a href="{{ route('staff.test.create', $patient->id) }}" class="btn btn-danger">Test</a>
+    <button onclick="printDocument('{{ route('staff.patient.detail.print', $patient->id) }}')" class="btn btn-danger">Cetak</button>
+    <a href="{{ route('staff.patient.edit', $patient->id) }}" class="btn btn-danger">Edit</a>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    function printDocument(url) {
+        var doc = window.open(url);
+        doc.window.print();
+        doc.onafterprint = function() {
+            doc.close()
+        }
+    }
+</script>
+@endpush

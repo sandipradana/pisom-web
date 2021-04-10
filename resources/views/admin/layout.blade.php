@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/assets/css/jquery-jvectormap-2.0.5.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 
@@ -32,7 +33,7 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                <img src="/adminlte/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Brad Diesel
@@ -48,7 +49,7 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <img src="/adminlte/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         John Pierce
@@ -64,7 +65,7 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <img src="/adminlte/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Nora Silvester
@@ -197,7 +198,9 @@
     <script src="/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="/adminlte/vendor/datatables/buttons.server-side.js"></script>
+    <!-- <script src="/adminlte/vendor/datatables/buttons.server-side.js"></script> -->
+    <script type="text/javascript" src="/assets/js/jquery-jvectormap-2.0.5.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.vmap.indonesia.js" charset="utf-8"></script>
     <script src="/adminlte/dist/js/adminlte.min.js"></script>
     @stack('scripts')
 </body>
