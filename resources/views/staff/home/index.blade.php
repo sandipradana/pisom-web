@@ -39,7 +39,7 @@
             </div>
             <a href="{{ route('staff.isolation.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-    </div>
+    </div> 
 </div>
 <div class="row">
     <div class="col-md-4">
@@ -85,14 +85,10 @@
         },
         type: 'doughnut',
         data: {
-            labels: {
-                !!json_encode($stats['patient']['index']) !!
-            },
+            labels: {!! json_encode($stats['patient']['index']) !!},
             datasets: [{
                 label: 'Pasien Isolasi',
-                data: {
-                    !!json_encode($stats['patient']['value']) !!
-                },
+                data: {!! json_encode($stats['patient']['value']) !!},
                 backgroundColor: [
                     '#9DEDEC',
                     '#DE9BE8',
@@ -119,14 +115,10 @@
         },
         type: 'pie',
         data: {
-            labels: {
-                !!json_encode($stats['gender']['index']) !!
-            },
+            labels: {!! json_encode($stats['gender']['index']) !!},
             datasets: [{
                 label: 'Jenis Kelamin',
-                data: {
-                    !!json_encode($stats['gender']['value']) !!
-                },
+                data: {!! json_encode($stats['gender']['value']) !!},
                 backgroundColor: [
                     '#64b5f6',
                     '#e57373'
@@ -149,16 +141,10 @@
         },
         type: 'bar',
         data: {
-            labels: {
-                !!json_encode($stats['cormobid']['index']) !!
-            },
+            labels: {!! json_encode($stats['cormobid']['index']) !!},
             datasets: [{
-                label: {
-                    !!json_encode($stats['cormobid']['index']) !!
-                },
-                data: {
-                    !!json_encode($stats['cormobid']['value']) !!
-                },
+                label: {!! json_encode($stats['cormobid']['index']) !!},
+                data: {!! json_encode($stats['cormobid']['value']) !!},
                 backgroundColor: [
                     '#64b5f6',
                     '#e57373'
@@ -182,14 +168,10 @@
         },
         type: 'pie',
         data: {
-            labels: {
-                !!json_encode($stats['case']['index']) !!
-            },
+            labels: {!! json_encode($stats['case']['index']) !!},
             datasets: [{
                 label: 'Derajat Kasus',
-                data: {
-                    !!json_encode($stats['case']['value']) !!
-                },
+                data: {!! json_encode($stats['case']['value']) !!},
                 backgroundColor: [
                     '#A4E374',
                     '#FCFC97',
@@ -217,16 +199,10 @@
         },
         type: 'bar',
         data: {
-            labels: {
-                !!json_encode($stats['symptom']['index']) !!
-            },
+            labels: {!! json_encode($stats['symptom']['index']) !!},
             datasets: [{
-                label: {
-                    !!json_encode($stats['symptom']['index']) !!
-                },
-                data: {
-                    !!json_encode($stats['symptom']['value']) !!
-                },
+                label: {!! json_encode($stats['symptom']['index']) !!},
+                data: {!!json_encode($stats['symptom']['value']) !!},
                 backgroundColor: [
                     '#9DEDEC',
                     '#DE9BE8',

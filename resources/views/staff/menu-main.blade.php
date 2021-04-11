@@ -11,7 +11,7 @@
     </a>
     @if($item->hasChildren())
     <ul class="nav nav-treeview" style="display: none;">
-        @include('admin.menu-main-dropdown', ['items' => $item->children()])
+        @include('staff.menu-main-dropdown', ['items' => $item->children()])
     </ul>
     @endif
 </li>

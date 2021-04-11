@@ -118,6 +118,7 @@
     <script src="/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="/adminlte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <script src="/adminlte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <script src="/adminlte/plugins/chart.js/Chart.min.js"></script>
     <script src="/assets/js/print.min.js"></script>
     <script src="/adminlte/dist/js/adminlte.min.js"></script>
     @stack('scripts')

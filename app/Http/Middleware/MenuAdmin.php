@@ -39,6 +39,8 @@ class MenuAdmin
             $menu->master->add('Kegiatan', ['route'  => 'admin.todo.index']);
             $menu->master->add('Jenis Kegiatan', ['route'  => 'admin.todo.category.index']);
 
+            $menu->add('Laporan', [])->data('icon', 'file');
+
         });
 
         return $next($request);

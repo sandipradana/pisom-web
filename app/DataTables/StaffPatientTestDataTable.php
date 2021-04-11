@@ -5,9 +5,8 @@ namespace App\DataTables;
 use App\Models\PatientTest;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\Request;
 
 class StaffPatientTestDataTable extends DataTable
 {
@@ -36,9 +35,6 @@ class StaffPatientTestDataTable extends DataTable
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                 </svg>
-            </a>
-            <a onclick="return confirm(\'Apakah anda yakin ?\');" href="{{ route("staff.test.report", $id) }}">
-                Download dokumen
             </a>');
     }
 
@@ -48,9 +44,16 @@ class StaffPatientTestDataTable extends DataTable
      * @param \App\Models\Patient $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PatientTest $model)
+    public function query(Request $request, PatientTest $model)
     {
-        return $model->with(['patient', 'type'])->select('patient_tests.*')->newQuery();
+        $query = $model->with(['patient', 'type'])->select('patient_tests.*')->newQuery();
+
+        if ($request->has('filter_date_start') && $request->has('filter_date_end')) {
+            if($request->filter_date_start !== null AND $request->filter_date_end !== null) 
+                $query->whereBetween('patient_tests.created_at', [date('Y-m-d', strtotime($request->filter_date_start)), date('Y-m-d', strtotime($request->filter_date_end))])->get();
+        }
+
+        return $query;
     }
 
     /**

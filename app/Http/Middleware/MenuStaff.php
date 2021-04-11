@@ -24,6 +24,9 @@ class MenuStaff
             $menu->add('Test', ['route'  => 'staff.test.index'])->data('icon', 'stethoscope');
             $menu->add('Isolation', ['route'  => 'staff.isolation.index'])->data('icon', 'house-user');
 
+            // $menu->add('Laporan', [])->data('icon', 'file');
+            // $menu->laporan->add('Rumah Sakit', ['route'  => 'staff.home.index'])->data('icon', 'file');
+
         });
 
         return $next($request);

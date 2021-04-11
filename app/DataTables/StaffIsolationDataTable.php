@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\Request;
 
 class StaffIsolationDataTable extends DataTable
 {
@@ -42,9 +43,16 @@ class StaffIsolationDataTable extends DataTable
      * @param \App\Models\Patient $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Journal $model)
+    public function query(Request $request, Journal $model)
     {
-        return $model->with(['patient', 'test'])->select('journals.*')->newQuery();
+        $query = $model->with(['patient', 'test'])->select('journals.*')->newQuery();
+
+        if ($request->has('filter_date_start') && $request->has('filter_date_end')) {
+            if($request->filter_date_start !== null AND $request->filter_date_end !== null) 
+                $query->whereBetween('journals.created_at', [date('Y-m-d', strtotime($request->filter_date_start)), date('Y-m-d', strtotime($request->filter_date_end))])->get();
+        }
+
+        return $query;
     }
 
     /**

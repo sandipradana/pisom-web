@@ -8,6 +8,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+            <form method="POST">
+                {{ csrf_field() }}
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -19,25 +21,31 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Pasien</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly class="form-control" value="{{ $patient->name }}">
+                                <input type="text" name="name" class="form-control" value="{{ $patient->name }}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Email</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly class="form-control" value="{{ $patient->email }}">
+                                <input type="text" name="email" class="form-control" value="{{ $patient->email }}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Alamat</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly class="form-control" value="{{ $patient->address }}">
+                                <input type="text" name="address" class="form-control" value="{{ $patient->address }}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Phone</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly class="form-control" value="{{ $patient->phone }}">
+                                <input type="text" name="phone" class="form-control" value="{{ $patient->phone }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="submit" class="form-control btn btn-danger" value="Simpan">
                             </div>
                         </div>
                     </div>
@@ -45,7 +53,7 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly class="form-control" value="{{ $patient->date_of_birth }}">
+                                <input type="text" name="date_of_birth" class="form-control" value="{{ $patient->date_of_birth }}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -57,7 +65,10 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
                             <div class="col-sm-8">
-                                <input type="text" readonly class="form-control" value="{{ ($patient->gender == 1 ? 'Laki-laki' : 'Perempuan') }}">
+                                <select name="gender" class="form-control">
+                                    <option value="1" @if($patient->gender == 1) selected @endif >Laki</option>
+                                    <option value="2" @if($patient->gender == 2) selected @endif >Perempuan</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -74,6 +85,7 @@
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -81,21 +93,9 @@
 @endsection
 
 @section('breadcrumb')
-<div style="float: right;">
-    <a href="{{ route('staff.test.create', $patient->id) }}" class="btn btn-danger">Test</a>
-    <button onclick="printDocument('{{ route('staff.patient.detail.print', $patient->id) }}')" class="btn btn-danger">Cetak</button>
-    <a href="{{ route('staff.patient.edit', $patient->id) }}" class="btn btn-danger">Edit</a>
-</div>
+
 @endsection
 
 @push('scripts')
-<script>
-    function printDocument(url) {
-        var doc = window.open(url);
-        doc.window.print();
-        doc.onafterprint = function() {
-            doc.close()
-        }
-    }
-</script>
+
 @endpush

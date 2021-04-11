@@ -168,30 +168,19 @@
             </div>
             <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
-
-        <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
             <div class="p-3">
                 <h5>Title</h5>
                 <p>Sidebar content</p>
             </div>
         </aside>
-        <!-- /.control-sidebar -->
-
-        <!-- Main Footer -->
         <footer class="main-footer text-sm">
-            <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
                 Pisom Team
             </div>
-            <!-- Default to the left -->
             <strong>Copyright &copy; 2020-2021 <a href="https://pisom.xyz">pizom.xyz</a>.</strong> All rights reserved.
         </footer>
     </div>
-    <!-- ./wrapper -->
-
     <script src="/adminlte/plugins/jquery/jquery.min.js"></script>
     <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -199,6 +188,7 @@
     <script src="/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <!-- <script src="/adminlte/vendor/datatables/buttons.server-side.js"></script> -->
+    <script src="/adminlte/plugins/chart.js/Chart.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery-jvectormap-2.0.5.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.vmap.indonesia.js" charset="utf-8"></script>
     <script src="/adminlte/dist/js/adminlte.min.js"></script>

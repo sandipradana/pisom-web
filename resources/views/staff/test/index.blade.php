@@ -64,7 +64,6 @@
 
 @section('breadcrumb')
 <div style="float: right;">
-    <a href="{{ route('staff.patient.create') }}" class="btn btn-danger">Cetak</a>
     <a href="{{ route('staff.patient.create') }}" class="btn btn-danger">Buat Baru</a>
 </div>
 @endsection

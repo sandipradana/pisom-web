@@ -29,7 +29,7 @@
 						</div>
 						<div class="form-group">
 							<label>Password</label>
-							<input id="staff_telepon" name="phone" type="text" class="form-control" placeholder="Password">
+							<input id="staff_telepon" name="password" type="text" class="form-control" placeholder="Password">
 						</div>
 						<div class="form-group">
 							<input id="staff_save" name="save" type="submit" class="form-control btn-danger" value="Simpan">

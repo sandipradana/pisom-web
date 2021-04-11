@@ -41,8 +41,12 @@
                             <option value="2">Ringan</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>Keterangan</label>
+                        <textarea name="description" class="form-control"></textarea>
+                    </div>
                     <button type="submit" class="btn btn-danger">Simpan</button>
-                </form>
+                 </form>
             </div>
         </div>
     </div>

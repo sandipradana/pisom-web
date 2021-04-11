@@ -176,11 +176,13 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::get('/test/delete/{id}', 'TestController@destroy')->name('test.destroy');
         Route::get('/test/report/{id}', 'TestController@report')->name('test.report');
         Route::get('/test/print', 'TestController@print')->name('test.print');
+        Route::get('/test/print-detail/{id}', 'TestController@printDetail')->name('test.print-detail');
           
         Route::get('/isolasi', 'IsolationController@index')->name('isolation.index');
         Route::post('/isolasi', 'IsolationController@datatable')->name('isolation.datatable');
         Route::get('/isolasi/create', 'IsolationController@create')->name('isolation.create');
-        Route::post('/isolasi/create/{patient_id}/{patient_test_id}', 'IsolationController@store')->name('isolation.store');
+        Route::get('/isolasi/print', 'IsolationController@print')->name('isolation.print');
+        Route::get('/isolasi/create/{patient_id}/{patient_test_id}', 'IsolationController@store')->name('isolation.store');
         Route::get('/isolasi/detail/{id}', 'IsolationController@detail')->name('isolation.detail');
         Route::get('/isolasi/delete/{id}', 'IsolationController@destroy')->name('isolation.destroy');
         Route::get('/isolasi/{id}/check/detail/{dayId}', 'IsolationController@detailCheck')->name('isolation.check.detail');

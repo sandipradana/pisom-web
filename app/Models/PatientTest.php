@@ -20,4 +20,14 @@ class PatientTest extends Model
     {
         return $this->belongsTo('App\Models\TestType', 'test_type_id');
     }
+
+    public function getResultNameAttribute()
+    {
+        return $this->result == 1 ? 'Negatif' : ($this->result == 2 ? "Positif" : "Sembuh");
+    }
+
+    public function getCaseNameAttribute()
+    {
+        return $this->case == 1 ? 'OTG' : 'Ringan';
+    }
 }

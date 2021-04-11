@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DataTables\StaffPatientTestDataTable as MainDataTable;
+use App\Models\Hospital;
 use App\Models\PatientTest;
 use App\Models\TestType;
 use App\Models\Patient;
+use App\Models\Staff;
 use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
@@ -42,18 +44,45 @@ class TestController extends Controller
         return redirect()->route('staff.test.detail', $patient_test->id);
     }
 
+    public function print(Request $request, PatientTest $model){
+
+        $query = $model->with(['patient', 'type'])->select('patient_tests.*')->newQuery();
+
+        if ($request->has('filter_date_start') && $request->has('filter_date_end')) {
+            if($request->filter_date_start !== null AND $request->filter_date_end !== null) 
+                $query->whereBetween('created_at', [date('Y-m-d', strtotime($request->filter_date_start)), date('Y-m-d', strtotime($request->filter_date_end))])->get();
+        }
+
+        $tests      = $query->get();
+        $staff      = Staff::find(Auth::guard('staff')->user()->id);
+
+        return view('staff.test.print', compact(['staff', 'tests']));
+    }
+
+    public function printDetail(Request $request, PatientTest $model, $id){
+
+        $test       = PatientTest::find($id);
+        $staff      = Staff::find(Auth::guard('staff')->user()->id);
+        $hospital   = Hospital::find($staff->hospital_id);
+        $patient    = Patient::find($test->patient_id);
+
+        return view('staff.test.print-detail', compact(['test', 'staff', 'hospital', 'patient']));
+    }
+
     public function detail($id){
         $test = PatientTest::with(['patient', 'type'])->findOrFail($id);
         return view('staff.test.detail', compact(['test']));
     }
 
     public function report($id){
+        
         $test       = PatientTest::with(['patient', 'type'])->findOrFail($id);
         $patient    = Patient::with('staff', 'hospital')->findOrFail($id);
         $staff      = Patient::with('staff', 'hospital')->findOrFail($id);
         $staff      = Auth::guard('staff')->user();
 
-        return response()->view('staff.test.report', compact(['test', 'patient', 'staff']))
+        return response()
+        ->view('staff.test.report', compact(['test', 'patient', 'staff']))
         ->header('Content-Type', 'application/vnd.ms-excel; charset=utf-8')
         ->header('Content-Disposition', 'attachment; filename=Laporan-Test-Pasien-'.$patient->id.'-'.$patient->name.'.xls');
     

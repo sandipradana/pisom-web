@@ -110,7 +110,22 @@ class PatientController extends Controller
     }
 
     public function update(Request $request, $id){
-        
+
+        $patient = Patient::findOrFail($id);
+        $patient->name          = $request->name;
+        $patient->email         = $request->email;
+        $patient->phone         = $request->phone;
+        $patient->date_of_birth = $request->date_of_birth;
+        $patient->address       = $request->address;
+        $patient->gender        = $request->gender;
+
+        if(strlen($request->password) > 0){
+			$patient->password = Hash::make($request->password);
+		}
+
+        $patient->save();
+
+        return redirect()->back();
     }
 
     public function addCormobid(Request $request, $id){
@@ -169,7 +184,7 @@ class PatientController extends Controller
                 $query->whereBetween('created_at', [date('Y-m-d', strtotime($request->filter_date_start)), date('Y-m-d', strtotime($request->filter_date_end))])->get();
         }
 
-        $patients    = $query->get();
+        $patients   = $query->get();
         $staff      = Staff::find(Auth::guard('staff')->user()->id);
         
         return view('staff.patient.print', compact('patients', 'staff'));

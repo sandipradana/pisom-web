@@ -14,7 +14,9 @@ use Carbon\Carbon;
 use App\Models\TodoType;
 use App\Models\Todo;
 use App\Models\SymptomCheck;
+use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class IsolationController extends Controller
 {
@@ -74,7 +76,6 @@ class IsolationController extends Controller
                 $new_symptom->save();
             }
 
-
             $patient_test->journal = 1;
             $patient_test->save();
         }
@@ -87,7 +88,7 @@ class IsolationController extends Controller
         $journal    = Journal::findOrFail($id);
         $patient    = Patient::findOrFail($journal->patient_id);
         $day        = Day::findOrFail($dayId);
-        $todos        = Todo::with(['type', 'category'])->where("day_id", $day->id)->get();
+        $todos      = Todo::with(['type', 'category'])->where("day_id", $day->id)->get();
 
         return view('staff.isolation.detailTodo', compact(['patient', 'day', 'todos']));
     }
@@ -97,7 +98,7 @@ class IsolationController extends Controller
         $journal    = Journal::findOrFail($id);
         $patient    = Patient::findOrFail($journal->patient_id);
         $day        = Day::findOrFail($dayId);
-        $symptoms    = SymptomCheck::with(['symptom'])->where("day_id", $day->id)->get();
+        $symptoms   = SymptomCheck::with(['symptom'])->where("day_id", $day->id)->get();
 
         return view('staff.isolation.detailCheck', compact(['patient', 'day', 'symptoms']));
     }
@@ -110,6 +111,27 @@ class IsolationController extends Controller
         $symptomStats   = $this->symptomStats($journal->id);
 
         return view("staff.isolation.detail", compact(['journal', 'patient', 'todoStats', 'symptomStats']));
+    }
+
+    public function print(Request $request, Journal $model){
+
+        $isAll = true;
+        $query = $model->with(['patient', 'test'])->select('journals.*')->newQuery();
+
+        if ($request->has('filter_date_start') && $request->has('filter_date_end')) {
+            if($request->filter_date_start !== null AND $request->filter_date_end !== null){ 
+                $isAll= false;
+                $query->whereBetween('journals.created_at', [date('Y-m-d', strtotime($request->filter_date_start)), date('Y-m-d', strtotime($request->filter_date_end))])->get();
+            }
+        }
+
+        $isolations = $query->get();
+        $staff      = Staff::find(Auth::guard('staff')->user()->id);
+        
+        $start_date = date('Y-m-d', strtotime($request->filter_date_start));
+        $end_date   = date('Y-m-d', strtotime($request->filter_date_end));
+
+        return view("staff.isolation.print", compact(['isolations', 'staff', 'start_date', 'end_date', 'isAll']));
     }
 
     public function todoStats($id)

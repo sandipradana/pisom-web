@@ -28,15 +28,16 @@
                     <input id="case" name="case" type="text" class="form-control" value="{{ ['-', 'OTG', 'Ringan'][(int) $test->case] }}" placeholder="Hasil">
                 </div>
 
-                @if($test->result == 2)
-                <form method="post" action="{{ route('staff.isolation.store', [$test->patient->id, $test->id]) }}">
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn btn-danger">Buat Journal</button>
-                </form>
-                @endif
             </div>
         </div>
     </div>
+</div>
+@endsection
+
+@section('breadcrumb')
+<div style="float: right;">
+    <a href="{{ route('staff.isolation.store', [$test->patient->id, $test->id]) }}" class="btn btn-danger">Buat Isolasi</a>
+    <a href="{{ route('staff.test.print-detail', [$test->id]) }}" class="btn btn-danger">Cetak</a>
 </div>
 @endsection
 
