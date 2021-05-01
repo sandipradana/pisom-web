@@ -18,6 +18,13 @@ class JournalController extends Controller
 		
 		$patient 	= $request->user();
 		$journal 	= Journal::where("patient_id", $patient->id)->orderBy('id', 'desc')->first();
+
+		if($journal == null){
+			return [
+				'status' => 400,
+				'message' => 'Journal Empty'
+			];
+		}
 		$day 		= Day::where("journal_id", $journal->id)->get();
 
 		return [

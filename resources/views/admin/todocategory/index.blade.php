@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('admin.layout')
 
 @section('title', 'Kategori Kegiatan')
 
@@ -16,7 +16,7 @@
 
 @section('breadcrumb')
 <div style="float: right;">
-    <a href="{{ route('admin.todocategory.create') }}" class="btn btn-danger">Buat Baru</a>
+    <a href="{{ route('admin.todo.category.create') }}" class="btn btn-danger">Buat Baru</a>
 </div>
 @endsection
 

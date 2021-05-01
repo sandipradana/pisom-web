@@ -32,4 +32,9 @@ class AuthController extends Controller
 
 		return back()->withErrors(['email' => 'Email or password are wrong.']);
     }
+
+    public function logout(Request $request){
+		auth()->guard('admin')->logout();
+		return redirect()->route('admin.auth.login');
+	}
 }

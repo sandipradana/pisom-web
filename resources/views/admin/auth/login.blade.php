@@ -30,6 +30,15 @@
                 <div class="text-center mb-3">
                     <img src="/assets/img/logo.png">
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{ route('admin.auth.login.action') }}" method="post">
                     {{ csrf_field() }}
                     <div class="input-group mb-3">

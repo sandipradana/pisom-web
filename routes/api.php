@@ -10,6 +10,8 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Api', 'as' => 'api.', 'mid
     Route::get('/region/districts', 'RegionController@districts')->name('region.districts');
     Route::get('/region/villages', 'RegionController@villages')->name('region.villages');
 
+    Route::post('/auth/login', 'AuthController@login')->name('auth.login');
+
     Route::get('/home/statistics', 'HomeController@statistics')->name('home.statistics');
 	
     Route::get('/news/latest', 'NewsController@latest')->name('news.latest');
@@ -26,7 +28,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Api', 'as' => 'api.', 'mid
     Route::post('/journal/public-detail/{id}', 'JournalController@publicDetail')->name('journal.public-detail');
        
 
-    Route::group(['middleware' => ['\\App\\Http\\Middleware\\PatientApiMiddleware', 'auth:api']], function () {
+    Route::group(['middleware' => ['\\App\\Http\\Middleware\\AccessApiPatientMiddleware', 'auth:api']], function () {
         Route::post('/journal/list', 'JournalController@list')->name('journal.list');
         Route::post('/journal/detail/{id}', 'JournalController@detail')->name('journal.detail');
         Route::post('/journal/stats/{id}', 'JournalController@stats')->name('journal.stats');

@@ -11,7 +11,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'as' => 'admin.', 
 
     Route::get('/auth/login', 'AuthController@login')->name('auth.login');
     Route::post('/auth/login', 'AuthController@loginAction')->name('auth.login.action');
-    Route::get('/auth/logout', 'AuthController@logoutAction')->name('auth.logout.action');
+    Route::get('/auth/logout', 'AuthController@logout')->name('auth.logout');
 
     Route::group(['middleware' => ['\\App\\Http\\Middleware\\AccessAdmin']], function () {
         Route::get('/', 'HomeController@index')->name('home.index');
@@ -71,12 +71,12 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'as' => 'admin.', 
         Route::get('/symptom/detail/{id}', 'SymptomController@show')->name('symptom.show');
         Route::get('/symptom/delete/{id}', 'SymptomController@destroy')->name('symptom.destroy');
 
-        Route::get('/test', 'TestController@index')->name('test.index');
+        /* Route::get('/test', 'TestController@index')->name('test.index');
         Route::post('/test', 'TestController@datatable')->name('test.datatable');
         Route::get('/test/create', 'TestController@create')->name('test.create');
         Route::post('/test/create', 'TestController@store')->name('test.store');
         Route::get('/test/detail/{id}', 'TestController@show')->name('test.show');
-        Route::get('/test/delete/{id}', 'TestController@destroy')->name('test.destroy');
+        Route::get('/test/delete/{id}', 'TestController@destroy')->name('test.destroy'); */
 
         Route::get('/test-type', 'TestTypeController@index')->name('testtype.index');
         Route::post('/test-type', 'TestTypeController@datatable')->name('testtype.datatable');
@@ -134,6 +134,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'as' => 'admin.', 
         Route::get('/todo/category/delete/{id}', 'TodoCategoryController@destroy')->name('todo.category.destroy');
                 
         Route::get('/account/profile', 'AccountController@profile')->name('account.profile');
+        Route::post('/account/profile', 'AccountController@update')->name('account.update');
     });
 });
 
@@ -190,5 +191,9 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         
         Route::get('/account/profile', 'AccountController@profile')->name('account.profile');
         Route::post('/account/profile', 'AccountController@update')->name('account.update');
+
+        Route::get('/report/monitoring/daily', 'MonitoringDailyController@daily')->name('report.monitoring.daily');
+        Route::get('/report/monitoring/daily/data', 'MonitoringDailyController@datatable')->name('report.monitoring.daily.data');
+        Route::get('/report/monitoring/daily/print', 'MonitoringDailyController@print')->name('report.monitoring.daily.print');
     });
 });

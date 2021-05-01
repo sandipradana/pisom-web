@@ -35,10 +35,10 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="{{ route('staff.patient.cormobid.add', $patient->id) }}">
+                <form method="post" action="{{ route('staff.patient.medicine.add', $patient->id) }}">
                     {{ csrf_field() }}
                     <label class="form-label">Tambah Obat</label>
-                    <select name="cormobidId" class="form-control form-sm">
+                    <select name="medicineId" class="form-control form-sm">
                         <option value="-">Pilih Obat</option>
                         @foreach($medicines as $medicine)
                         <option value="{{ $medicine->id }}">{{ $medicine->name }}</option>

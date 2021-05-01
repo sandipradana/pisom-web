@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DataTables\PatientDataTable as MainDataTable;
+use App\Models\Patient;
 
 class PatientController extends Controller
 {
@@ -22,44 +23,44 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
-        $admin = new Admin();
+        $patient = new Patient();
 
-        $admin->name        = $request->name;
-        $admin->email       = $request->email;
-        $admin->password    = Hash::make($request->password);
-        $admin->phone       = $request->phone;
+        $patient->name        = $request->name;
+        $patient->email       = $request->email;
+        $patient->password    = Hash::make($request->password);
+        $patient->phone       = $request->phone;
 
-        $admin->save();
+        $patient->save();
 
-        return redirect()->route('admin.admin.show', $admin->id);
+        return redirect()->route('admin.patient.show', $patient->id);
     }
 
     public function show($id)
     {
-        $admin = Admin::findOrFail($id);
+        $patient = Patient::findOrFail($id);
         
-        return view('admin.admin.show', compact(['admin']));
+        return view('admin.patient.show', compact(['patient']));
     }
 
     public function edit($id)
     {
-        $admin = Admin::findOrFail($id);
+        $patient = Patient::findOrFail($id);
 
-        return view('admin.admin.show', compact(['admin']));
+        return view('admin.patient.show', compact(['patient']));
     }
 
     public function update(Request $request, $id)
     {
-        $admin = Admin::findOrFail($id);
-        $admin->save();
+        $patient = Patient::findOrFail($id);
+        $patient->save();
 
         return redirect()->back();
     }
 
     public function destroy($id)
     {
-        $admin = Admin::findOrFail($id);
-        $admin->delete();
+        $patient = Patient::findOrFail($id);
+        $patient->delete();
 
         return redirect()->back();
     }

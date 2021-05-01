@@ -75,20 +75,7 @@
                     <div role="tabpanel" class="tab-pane active" id="profile">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            @foreach($todoStats as $key => $value)
-                                            @if(count($value['label']) > 0)
-                                            <div class="col-md-4">
-                                                <canvas id="todo_{{ $key }}" height="400"></canvas>
-                                            </div>
-                                            @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
+                            <div class="col-md-8">
                                     <table class="table table-sm">
                                         <tbody>
                                             @foreach((isset($journal->day) ? $journal->day : []) as $day)
@@ -100,6 +87,20 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            @foreach($todoStats as $key => $value)
+                                                @if(count($value['label']) > 0)
+                                                <div class="col-md-4">
+                                                    <canvas id="todo_{{ $key }}" height="400"></canvas>
+                                                </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

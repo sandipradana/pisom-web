@@ -16,7 +16,7 @@
 
 @section('breadcrumb')
 <div style="float: right;">
-    <a href="{{ route('admin.berita.create') }}" class="btn btn-danger">Buat Baru</a>
+    <a href="{{ route('admin.news.create') }}" class="btn btn-danger">Buat Baru</a>
 </div>
 @endsection
 

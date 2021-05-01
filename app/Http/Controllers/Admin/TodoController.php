@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DataTables\TodoTypeDataTable as MainDataTable;
-use App\Models\Todo;
 use App\Models\TodoCategory;
+use App\Models\TodoType;
 
 class TodoController extends Controller
 {
@@ -41,10 +41,10 @@ class TodoController extends Controller
 
     public function show($id)
     {
-        $todotype = Todo::findOrFail($id);
+        $todotype = TodoType::findOrFail($id);
 		$categories = TodoCategory::all();
         
-        return view('admin.todo.show', compact(['todo', 'categories']));
+        return view('admin.todo.show', compact(['todotype', 'categories']));
     }
 
     public function edit($id)
