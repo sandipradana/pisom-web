@@ -183,6 +183,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::post('/isolasi', 'IsolationController@datatable')->name('isolation.datatable');
         Route::get('/isolasi/create', 'IsolationController@create')->name('isolation.create');
         Route::get('/isolasi/print', 'IsolationController@print')->name('isolation.print');
+        Route::get('/isolasi/print/{id}', 'IsolationController@printDetail')->name('isolation.print-detail');
         Route::get('/isolasi/create/{patient_id}/{patient_test_id}', 'IsolationController@store')->name('isolation.store');
         Route::get('/isolasi/detail/{id}', 'IsolationController@detail')->name('isolation.detail');
         Route::get('/isolasi/delete/{id}', 'IsolationController@destroy')->name('isolation.destroy');

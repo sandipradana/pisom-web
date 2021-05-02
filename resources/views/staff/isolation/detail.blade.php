@@ -75,7 +75,7 @@
                     <div role="tabpanel" class="tab-pane active" id="profile">
                         <div class="container-fluid">
                             <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                     <table class="table table-sm">
                                         <tbody>
                                             @foreach((isset($journal->day) ? $journal->day : []) as $day)
@@ -87,12 +87,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="container-fluid">
                                         <div class="row">
                                             @foreach($todoStats as $key => $value)
                                                 @if(count($value['label']) > 0)
-                                                <div class="col-md-4">
+                                                <div class="col-md-12">
                                                     <canvas id="todo_{{ $key }}" height="400"></canvas>
                                                 </div>
                                                 @endif
@@ -119,7 +119,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <canvas id="symptom" height="400"></canvas>
                                 </div>
                             </div>
@@ -150,14 +150,10 @@
         },
         type: 'doughnut',
         data: {
-            labels: {
-                !!json_encode($value['label']) !!
-            },
-            datasets: [{
+            labels: {!!json_encode($value['label']) !!},
+                datasets: [{
                 label: 'Grafik Gejala',
-                data: {
-                    !!json_encode($value['value']) !!
-                },
+                data: {!!json_encode($value['value']) !!},
                 backgroundColor: [
                     '#9DEDEC',
                     '#DE9BE8',
@@ -172,7 +168,6 @@
 </script>
 @endif
 @endforeach
-
 <script>
     var ctxsymptom = document.getElementById('symptom').getContext('2d');
     var chartsymptom = new Chart(ctxsymptom, {
@@ -187,14 +182,10 @@
         },
         type: 'doughnut',
         data: {
-            labels: {
-                !!json_encode($symptomStats['label']) !!
-            },
+            labels: {!!json_encode($symptomStats['label']) !!},
             datasets: [{
                 label: 'Grafik Gejala',
-                data: {
-                    !!json_encode($symptomStats['value']) !!
-                },
+                data: {!!json_encode($symptomStats['value']) !!},
                 backgroundColor: [
                     '#9DEDEC',
                     '#DE9BE8',
@@ -208,3 +199,10 @@
     });
 </script>
 @endpush
+
+
+@section('breadcrumb')
+<div style="float: right;">
+    <a href="{{ route('staff.isolation.print-detail', $journal->id) }}" class="btn btn-danger">Print</a>
+</div>
+@endsection

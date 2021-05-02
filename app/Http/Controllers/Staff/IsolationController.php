@@ -17,6 +17,7 @@ use App\Models\SymptomCheck;
 use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Hospital;
 
 class IsolationController extends Controller
 {
@@ -111,6 +112,40 @@ class IsolationController extends Controller
         $symptomStats   = $this->symptomStats($journal->id);
 
         return view("staff.isolation.detail", compact(['journal', 'patient', 'todoStats', 'symptomStats']));
+    }
+
+    public function printDetail(Request $request, $id){
+
+        $journal    = Journal::with(['day'])->findOrFail($id);
+        $staff      = Auth::guard('staff')->user();
+        $hospital   = Hospital::find($staff->hospital_id);
+        $patient    = Patient::findOrFail($journal->patient_id);
+
+        $days       = $journal->day;
+
+        $todos = DB::select("SELECT todos.todo_type_id as id, todo_types.name as name FROM `todos` JOIN todo_types ON todos.todo_type_id = todo_types.id JOIN todo_categories ON todo_categories.id = todos.`todo_category_id` JOIN days ON todos.day_id = day_id JOIN journals ON days.journal_id = journals.id WHERE journals.id = ? AND journals.patient_id = ? GROUP BY todos.todo_type_id", [$journal->id, $patient->id]);
+        $symptoms = DB::select("SELECT symptom_checks.`symptom_id` as id, symptoms.name FROM `symptom_checks` JOIN symptoms ON symptoms.id = symptom_checks.`symptom_id` JOIN `days` ON symptom_checks.day_id = `days`.id JOIN journals ON days.journal_id = journals.id WHERE journals.id = ? AND journals.patient_id = ? GROUP BY symptom_checks.`symptom_id`", [$journal->id, $patient->id]);
+
+        $todoStatus = [];
+        foreach($todos as $todo){
+            $todoStatus[$todo->id] = DB::select("SELECT todos.status FROM `todos` JOIN todo_types ON todos.todo_type_id = todo_types.id JOIN todo_categories ON todo_categories.id = todos.`todo_category_id` JOIN days ON todos.day_id = day_id JOIN journals ON days.journal_id = journals.id WHERE journals.id = ? AND journals.patient_id = ? AND todos.id = ?", [$journal->id, $patient->id, $todo->id]);
+        }
+
+        $symptomStatus = [];
+        foreach($symptoms as $symptom){
+            $symptomStatus[$symptom->id] = DB::select("SELECT symptom_checks.status FROM `symptom_checks` JOIN symptoms ON symptoms.id = symptom_checks.`symptom_id` JOIN `days` ON symptom_checks.day_id = `days`.id JOIN journals ON days.journal_id = journals.id WHERE journals.id = ? AND journals.patient_id = ? AND symptoms.id = ? ", [$journal->id, $patient->id, $symptom->id]);
+        }
+
+        return view('staff.isolation.print-detail', compact([
+            'journal',
+            'staff',
+            'hospital',
+            'patient',
+            'todos',
+            'symptoms',
+            'todoStatus',
+            'symptomStatus'
+        ]));
     }
 
     public function print(Request $request, Journal $model){
