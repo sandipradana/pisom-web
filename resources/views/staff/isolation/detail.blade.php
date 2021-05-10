@@ -204,5 +204,6 @@
 @section('breadcrumb')
 <div style="float: right;">
     <a href="{{ route('staff.isolation.print-detail', $journal->id) }}" class="btn btn-danger">Print</a>
+    <a href="{{ route('staff.isolation.certificate', $journal->id) }}" class="btn btn-danger">Sertifikat</a>
 </div>
 @endsection

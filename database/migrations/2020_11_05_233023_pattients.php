@@ -21,6 +21,7 @@ class Pattients extends Migration
             $table->string("address");
             $table->string("phone");
             $table->string("api_token", 32)->nullable();
+            $table->string("firebase_token")->nullable();
             $table->date("date_of_birth");
             $table->unsignedTinyInteger("gender");
             $table->integer("hospital_id");

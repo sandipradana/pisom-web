@@ -231,4 +231,100 @@ class IsolationController extends Controller
 
         return $result;
     }
+
+    public function certificate(Request $request, $id)
+    {
+        $journal    = Journal::with(['test', 'day'])->findOrFail($id);
+        $patient    = Patient::with('staff', 'hospital')->findOrFail($journal->patient_id);
+
+        $name =  $patient->name;
+        $name_len = strlen($name);
+
+         $occupation = $this->dateIndo(date("d-m-Y", strtotime($journal->start)))." - ".$this->dateIndo(date("d-m-Y", strtotime($journal->end)));
+
+        if ($occupation) {
+          $font_size_occupation = 20;
+        }
+
+        $image = storage_path('certificate/certi.png');
+
+        $createimage = imagecreatefrompng($image);
+
+        //this is going to be created once the generate button is clicked
+        $output_path = "certificate/certificate-" . $journal->id . ".png";
+        $output = $output_path;
+
+        //then we make use of the imagecolorallocate inbuilt php function which i used to set color to the text we are displaying on the image in RGB format
+        $white = imagecolorallocate($createimage, 205, 245, 255);
+        $black = imagecolorallocate($createimage, 0, 0, 0);
+
+        //Then we make use of the angle since we will also make use of it when calling the imagettftext function below
+        $rotation = 0;
+
+        //we then set the x and y axis to fix the position of our text name
+        $origin_x = 800;
+        $origin_y = 700;
+
+        //we then set the x and y axis to fix the position of our text occupation
+        $origin1_x = 800;
+        $origin1_y = 880;
+
+        //we then set the differnet size range based on the lenght of the text which we have declared when we called values from the form
+        if ($name_len <= 7) {
+            $font_size = 50;
+        } elseif ($name_len <= 12) {
+            $font_size = 50;
+        } elseif ($name_len <= 15) {
+            $font_size = 50;
+        } elseif ($name_len <= 20) {
+            $font_size = 50;
+        } elseif ($name_len <= 22) {
+            $font_size = 50;
+        } elseif ($name_len <= 33) {
+            $font_size = 50;
+            $origin_x = 700;
+        } else {
+            $font_size = 10;
+        }
+
+        $certificate_text = $name;
+
+        //font directory for name
+        $drFont = storage_path('certificate/developer.ttf');
+
+        // font directory for occupation name
+        $drFont1 = storage_path('certificate/Gotham-black.otf');
+
+        //function to display name on certificate picture
+        $text1 = imagettftext($createimage, $font_size, $rotation, $origin_x, $origin_y, $black, $drFont, $certificate_text);
+
+        //function to display occupation name on certificate picture
+        $text2 = imagettftext($createimage, $font_size_occupation, $rotation, $origin1_x + 2, $origin1_y, $black, $drFont1, $occupation);
+
+        imagepng($createimage, $output, 3);
+
+         return view('staff.isolation.certificate', compact(['output_path']));
+    }
+
+    public function dateIndo($tanggal){
+
+        $bulan = array (
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+
+        $pecahkan = explode('-', $tanggal);
+
+        return $pecahkan[0] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[2];
+    }
 }

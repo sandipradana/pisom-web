@@ -14,6 +14,7 @@ class AuthController extends Controller
 		if (auth()->guard('patient')->attempt(['email' => $request->email, 'password' => $request->password ])) {
 			$patient = auth()->guard('patient')->user();
 			$patient->api_token = md5($patient->id.microtime());
+			$patient->firebase_token = $request->firebase_token;
 			$patient->save();
 
 			$patient->age = Carbon::parse($patient->date_of_birth)->age;

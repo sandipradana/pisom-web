@@ -190,6 +190,8 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::get('/isolasi/{id}/check/detail/{dayId}', 'IsolationController@detailCheck')->name('isolation.check.detail');
         Route::get('/isolasi/{id}/todo/detail/{dayId}', 'IsolationController@detailTodo')->name('isolation.todo.detail');
         
+        Route::get('/isolasi/certificate/{id}', 'IsolationController@certificate')->name('isolation.certificate');
+        
         Route::get('/account/profile', 'AccountController@profile')->name('account.profile');
         Route::post('/account/profile', 'AccountController@update')->name('account.update');
 
