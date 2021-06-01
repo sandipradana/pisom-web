@@ -174,8 +174,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
         
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Kawankoding\Fcm\FcmServiceProvider::class,
+        Kreait\Laravel\Firebase\ServiceProvider::class
 
     ],
 
@@ -230,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Fcm' => Kawankoding\Fcm\FcmFacade::class,
     ],
 
 ];

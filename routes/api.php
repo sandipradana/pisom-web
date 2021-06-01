@@ -26,12 +26,13 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Api', 'as' => 'api.', 'mid
     Route::post('/journal/public-list', 'JournalController@publicList')->name('journal.public-list');
     Route::post('/journal/public-single/{id}', 'JournalController@publicSingle')->name('journal.public-single');
     Route::post('/journal/public-detail/{id}', 'JournalController@publicDetail')->name('journal.public-detail');
-       
+    Route::post('/journal/stats/{id}', 'JournalController@stats')->name('journal.stats');
+    Route::post('/symptom/stats/{id}', 'SymptomController@stats')->name('symptom.stats');
 
     Route::group(['middleware' => ['\\App\\Http\\Middleware\\AccessApiPatientMiddleware', 'auth:api']], function () {
         Route::post('/journal/list', 'JournalController@list')->name('journal.list');
         Route::post('/journal/detail/{id}', 'JournalController@detail')->name('journal.detail');
-        Route::post('/journal/stats/{id}', 'JournalController@stats')->name('journal.stats');
+
 
         Route::get('/patient/profile', 'PatientController@detail')->name('patient.detail');
 
@@ -41,7 +42,6 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Api', 'as' => 'api.', 'mid
         Route::post('/symptom/daylist', 'SymptomController@daylist')->name('symptom.daylist');
         Route::post('/symptom/detail/{id}', 'SymptomController@detail')->name('symptom.detail');
         Route::post('/symptom/update', 'SymptomController@update')->name('symptom.update');
-        Route::post('/symptom/stats/{id}', 'SymptomController@stats')->name('symptom.stats');
 
         Route::post('/auth/logout', 'AuthController@logout')->name('auth.logout');
     });

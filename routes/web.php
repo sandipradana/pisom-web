@@ -1,10 +1,49 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use Kreait\Firebase\Messaging;
+use Illuminate\Support\Facades\DB;
 
 Route::group(['namespace' => 'App\\Http\\Controllers\\Guest', 'as' => 'guest.'], function () {
     Route::get('/', 'HomeController@index')->name('home.index');
     Route::get('/download', 'HomeController@download')->name('home.download');
+
+    Route::get('/send-notification', function (Messaging $messaging) {
+
+        $remembers = DB::select('
+
+            SELECT 
+                patients.firebase_token as firebase_token,
+                patients.name as patient_name
+            FROM
+                journals
+            JOIN
+                patients ON patients.id = journals.patient_id
+            JOIN
+                days ON days.journal_id = journals.id
+            WHERE
+                days.date = ?
+            AND
+                (
+                    days.symptom_status = 0
+                        OR
+                    days.todo_status = 0
+                )
+            AND
+                patients.firebase_token IS NOT NULL
+
+        ', [date('Y-m-d')]);
+
+        foreach($remembers as $remember) {
+            $message = CloudMessage::withTarget("token", $remember->firebase_token)->withNotification(Notification::create('Pengingat', 'Jangan lupa untuk isi aktifitas dan check gejalanya'));
+            $messaging->send($message);
+        }
+
+        return $remembers;
+    });
+
 });
 
 Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['\\App\\Http\\Middleware\\MenuAdmin']], function () {
@@ -62,7 +101,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'as' => 'admin.', 
         Route::post('/hospital//edit/{id}', 'HospitalController@update')->name('hospital.update');
         Route::get('/hospital/detail/{id}', 'HospitalController@show')->name('hospital.show');
         Route::get('/hospital/delete/{id}', 'HospitalController@destroy')->name('hospital.destroy');
-        
+
         Route::get('/symptom', 'SymptomController@index')->name('symptom.index');
         Route::post('/symptom', 'SymptomController@datatable')->name('symptom.datatable');
         Route::get('/symptom/create', 'SymptomController@create')->name('symptom.create');
@@ -101,7 +140,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'as' => 'admin.', 
         Route::post('/news/category/edit/{id}', 'NewsCategoryController@update')->name('news.category.update');
         Route::get('/news/category/detail/{id}', 'NewsCategoryController@show')->name('news.category.show');
         Route::get('/news/category/delete/{id}', 'NewsCategoryController@destroy')->name('news.category.destroy');
-        
+
         Route::get('/news/comment', 'NewsCommentController@index')->name('news.comment.index');
         Route::post('/news/comment', 'NewsCommentController@datatable')->name('news.comment.datatable');
         Route::get('/news/comment/create', 'NewsCommentController@create')->name('news.comment.create');
@@ -132,7 +171,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'as' => 'admin.', 
         Route::get('/todo/category/detail/{id}', 'TodoCategoryController@show')->name('todo.category.show');
         Route::post('/todo/category/edit/{id}', 'TodoCategoryController@update')->name('todo.category.update');
         Route::get('/todo/category/delete/{id}', 'TodoCategoryController@destroy')->name('todo.category.destroy');
-                
+
         Route::get('/account/profile', 'AccountController@profile')->name('account.profile');
         Route::post('/account/profile', 'AccountController@update')->name('account.update');
     });
@@ -178,7 +217,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::get('/test/report/{id}', 'TestController@report')->name('test.report');
         Route::get('/test/print', 'TestController@print')->name('test.print');
         Route::get('/test/print-detail/{id}', 'TestController@printDetail')->name('test.print-detail');
-          
+
         Route::get('/isolasi', 'IsolationController@index')->name('isolation.index');
         Route::post('/isolasi', 'IsolationController@datatable')->name('isolation.datatable');
         Route::get('/isolasi/create', 'IsolationController@create')->name('isolation.create');
@@ -189,9 +228,9 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Staff', 'as' => 'staff.', 
         Route::get('/isolasi/delete/{id}', 'IsolationController@destroy')->name('isolation.destroy');
         Route::get('/isolasi/{id}/check/detail/{dayId}', 'IsolationController@detailCheck')->name('isolation.check.detail');
         Route::get('/isolasi/{id}/todo/detail/{dayId}', 'IsolationController@detailTodo')->name('isolation.todo.detail');
-        
+
         Route::get('/isolasi/certificate/{id}', 'IsolationController@certificate')->name('isolation.certificate');
-        
+
         Route::get('/account/profile', 'AccountController@profile')->name('account.profile');
         Route::post('/account/profile', 'AccountController@update')->name('account.update');
 
