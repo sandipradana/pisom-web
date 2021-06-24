@@ -16,6 +16,7 @@
             </div>
             <div class="col-11">
                 <h3>Aplikasi Isolasi Mandiri</h3>
+                <h6>Detil Test Pasien</h6>
             </div>
         </div>
         <div class="mn-5">&nbsp;</div>
@@ -25,15 +26,15 @@
                 <table class="table table-bordered table-sm">
                     <tr>
                         <td>Nama</td>
-                        <td>{{ $hospital->name }}</td>
+                        <td>{{ $data->hospital_name }}</td>
                     </tr>
                     <tr>
                         <td>Telepon</td>
-                        <td>{{ $hospital->phone }}</td>
+                        <td>{{ $data->hospital_phone }}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>
-                        <td>{{ $hospital->address }}</td>
+                        <td>{{ $data->hospital_address }}</td>
                     </tr>
                 </table>
             </div>
@@ -44,27 +45,27 @@
                 <table class="table table-bordered table-sm">
                     <tr>
                         <td>Id</td>
-                        <td>{{ $patient->id }}</td>
+                        <td>{{ $data->patient_id }}</td>
                         <td>Tanggal Lahir</td>
-                        <td>{{ $patient->date_of_birth }}</td>
+                        <td>{{ $data->patient_date_of_birth }}</td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>{{ $patient->name }}</td>
+                        <td>{{ $data->patient_name }}</td>
                         <td>Umur</td>
-                        <td>{{ $patient->age }}</td>
+                        <td>{{ $data->patient_age }}</td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td>{{ $patient->email }}</td>
+                        <td>{{ $data->patient_email }}</td>
                         <td>Jenis Kelamin</td>
-                        <td>{{ $patient->gender_name }}</td>
+                        <td>{{ $data->patient_gender }}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>
-                        <td>{{ $patient->address }}</td>
+                        <td>{{ $data->patient_address }}</td>
                         <td>Phone</td>
-                        <td>{{ $patient->phone }}</td>
+                        <td>{{ $data->patient_phone }}</td>
                     </tr>
                 </table>
             </div>
@@ -80,21 +81,23 @@
                         <td>Hasil</td>
                         <td>Derajat</td>
                     </tr>
+                    @foreach(json_decode($data->tests) as $test)
                     <tr>
                         <td>{{ $test->id }}</td>
-                        <td>{{ $test->type->name }}</td>
-                        <td>{{ $test->created_at }}</td>
-                        <td>{{ $test->result_name }}</td>
-                        <td>{{ $test->case_name }}</td>
+                        <td>{{ $test->name }}</td>
+                        <td>{{ date("Y-m-d", strtotime($test->date)) }}</td>
+                        <td>{{ $test->result }}</td>
+                        <td>{{ $test->case }}</td>
                     </tr>
+                    @endforeach
                 </table>
             </div>
         </div>
         <span>&nbsp;</span>
         <table>
             <tbody>
-                <tr>
-                    <td>&nbsp;Mengetahui</td>
+            <tr>
+                    <td>&nbsp;{{ date("Y-m-d") }}<br />&nbsp;Mengetahui</td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -106,7 +109,7 @@
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>{{ $staff->name }}</td>
+                    <td>{{ @$staff->name }}</td>
                 </tr>
             </tbody>
         </table>

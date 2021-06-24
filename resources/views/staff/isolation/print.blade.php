@@ -33,14 +33,16 @@
                         <td>Nama</td>
                         <td>Mulai</td>
                         <td>Berakhir</td>
+                        <td>Status</td>
                     </tr>
-                    @foreach($isolations as $isolation)
+                    @foreach($data as $isolation)
                     <tr>
-                        <td>{{ $isolation->id }}</td>
-                        <td>{{ $isolation->patient->id }}</td>
-                        <td>{{ $isolation->patient->name }}</td>
-                        <td>{{ $isolation->start }}</td>
-                        <td>{{ $isolation->end }}</td>
+                        <td>{{ $isolation->journal_id }}</td>
+                        <td>{{ $isolation->patient_id }}</td>
+                        <td>{{ $isolation->patient_name }}</td>
+                        <td>{{ $isolation->journal_start }}</td>
+                        <td>{{ $isolation->journal_end }}</td>
+                        <td>{{ ($isolation->journal_status == 1 ? "Selesai" : "Proses") }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -51,7 +53,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td>&nbsp;Mengetahui</td>
+                    <td>&nbsp;{{ date('Y-m-d') }}<br />&nbsp;Mengetahui</td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

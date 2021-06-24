@@ -150,7 +150,7 @@ class IsolationController extends Controller
 
     public function print(Request $request, Journal $model){
 
-        $isAll = true;
+        /* $isAll = true;
         $query = $model->with(['patient', 'test'])->select('journals.*')->newQuery();
 
         if ($request->has('filter_date_start') && $request->has('filter_date_end')) {
@@ -166,7 +166,33 @@ class IsolationController extends Controller
         $start_date = date('Y-m-d', strtotime($request->filter_date_start));
         $end_date   = date('Y-m-d', strtotime($request->filter_date_end));
 
-        return view("staff.isolation.print", compact(['isolations', 'staff', 'start_date', 'end_date', 'isAll']));
+        return view("staff.isolation.print", compact(['isolations', 'staff', 'start_date', 'end_date', 'isAll'])); */
+
+        $isAll      = false;
+        $staff      = Staff::find(Auth::guard('staff')->user()->id);
+        $start_date = date('Y-m-d', strtotime($request->filter_date_start));
+        $end_date   = date('Y-m-d', strtotime($request->filter_date_end));
+
+        $data = DB::select("
+
+            SELECT 
+                journals.id as journal_id,
+                journals.start as journal_start,
+                journals.end as journal_end,
+                journals.status as journal_status,
+                
+                patients.id as patient_id,
+                patients.name as patient_name
+            FROM
+                journals
+            LEFT JOIN
+                patients ON patients.id = journals.patient_id
+            WHERE 
+                journals.created_at BETWEEN ? AND ?
+
+        ", [$start_date, $end_date]);
+
+        return view("staff.isolation.print", compact(['data', 'staff', 'start_date', 'end_date', 'isAll'])); 
     }
 
     public function todoStats($id)

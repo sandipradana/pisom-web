@@ -207,13 +207,50 @@ class PatientController extends Controller
 
     public function printDetail($id)
     {
-
-        $patient    = Patient::find($id);
+        /* $patient    = Patient::find($id);
         $hospital   = Hospital::find($patient->hospital_id);
         $staff      = Staff::find(Auth::guard('staff')->user()->id);
-        $cormobids  = PatientCormobid::findByPatient($patient->id);
+        $cormobids  = PatientCormobid::findByPatient($patient->id); */
 
-        return view('staff.patient.print-detail', compact('patient', 'hospital', 'staff', 'cormobids'));
+        $data = DB::select("
+
+        SELECT 
+            patients.id as patient_id,
+            patients.name as patient_name,
+            patients.email as patient_email,
+            patients.date_of_birth as patient_date_of_birth,
+            ROUND((DATEDIFF(NOW(), patients.date_of_birth) / 365.25), 0) as patient_age,
+            patients.address as patient_address,
+            patients.phone as patient_phone,
+            CASE WHEN patients.gender = 1 THEN 'Laki - laki' ELSE 'Perempuan' END as patient_gender,
+
+            hospitals.name as hospital_name,
+            hospitals.phone as hospital_phone,
+            hospitals.address as hospital_address,
+
+            staffs.name as staff_name,
+
+            CAST(CONCAT('[', GROUP_CONCAT(JSON_OBJECT('name', cormobids.name)), ']') AS JSON) as cormobids
+         FROM
+             patients
+         LEFT JOIN 
+             hospitals ON hospitals.id = patients.hospital_id
+         LEFT JOIN
+              staffs ON staffs.id = patients.staff_id
+         LEFT JOIN
+             patient_cormobids ON patient_cormobids.patient_id = patients.id
+         LEFT JOIN
+             cormobids ON patient_cormobids.cormobid_id = cormobids.id
+         WHERE 
+             patients.id = ?
+         GROUP BY
+             patients.id, hospitals.id
+        ", [$id]);
+   
+        $data = collect($data)->first();
+ 
+
+        return view('staff.patient.print-detail', compact('data'));
     }
 
     public function report($id)

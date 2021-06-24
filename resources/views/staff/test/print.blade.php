@@ -16,6 +16,7 @@
             </div>
             <div class="col-11">
                 <h3>Aplikasi Isolasi Mandiri</h3>
+                <h6>Daftar test periode {{ $start_date }} - {{ $end_date }}</h6>
             </div>
         </div>
         <div class="mn-5">&nbsp;</div>
@@ -31,15 +32,15 @@
                         <td>Hasil</td>
                         <td>Derajat</td>
                     </tr>
-                    @foreach($tests as $test)
+                    @foreach($data as $test)
                     <tr>
-                        <td>{{ $test->id }}</td>
-                        <td>{{ $test->patient->id }}</td>
-                        <td>{{ $test->patient->name }}</td>
-                        <td>{{ $test->type->name }}</td>
-                        <td>{{ $test->created_at }}</td>
-                        <td>{{ $test->result_name }}</td>
-                        <td>{{ $test->case_name }}</td>
+                        <td>{{ $test->test_id }}</td>
+                        <td>{{ $test->patient_id }}</td>
+                        <td>{{ $test->patient_name }}</td>
+                        <td>{{ $test->test_name }}</td>
+                        <td>{{ $test->test_date }}</td>
+                        <td>{{ $test->test_result }}</td>
+                        <td>{{ $test->test_case }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -50,7 +51,7 @@
         <table>
             <tbody>
                 <tr>
-                    <td>&nbsp;Mengetahui</td>
+                    <td>&nbsp;{{ date("Y-m-d") }}<br />&nbsp;Mengetahui</td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -62,7 +63,7 @@
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>{{ $staff->name }}</td>
+                    <td>{{ @$staff->name }}</td>
                 </tr>
             </tbody>
         </table>

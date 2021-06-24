@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <title>PISOM - Detil Pasien {{ $patient->id }} - {{ $patient->name }}</title>
+    <title>PISOM - Detil Pasien {{ $data->patient_id }} - {{ $data->patient_name }}</title>
 </head>
 
 <body>
@@ -16,6 +16,7 @@
             </div>
             <div class="col-11">
                 <h3>Aplikasi Isolasi Mandiri</h3>
+                <h6>PISOM - Detil Pasien {{ $data->patient_id }} - {{ $data->patient_name }}</h6>
             </div>
         </div>
         <div class="mn-5">&nbsp;</div>
@@ -25,15 +26,15 @@
                 <table class="table table-bordered table-sm">
                     <tr>
                         <td>Nama</td>
-                        <td>{{ $hospital->name }}</td>
+                        <td>{{ $data->hospital_name }}</td>
                     </tr>
                     <tr>
                         <td>Telepon</td>
-                        <td>{{ $hospital->phone }}</td>
+                        <td>{{ $data->hospital_phone }}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>
-                        <td>{{ $hospital->address }}</td>
+                        <td>{{ $data->hospital_address }}</td>
                     </tr>
                 </table>
             </div>
@@ -44,27 +45,27 @@
                 <table class="table table-bordered table-sm">
                     <tr>
                         <td>Id</td>
-                        <td>{{ $patient->id }}</td>
+                        <td>{{ $data->patient_id }}</td>
                         <td>Tanggal Lahir</td>
-                        <td>{{ $patient->date_of_birth }}</td>
+                        <td>{{ $data->patient_date_of_birth }}</td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>{{ $patient->name }}</td>
+                        <td>{{ $data->patient_name }}</td>
                         <td>Umur</td>
-                        <td>{{ $patient->age }}</td>
+                        <td>{{ $data->patient_age }}</td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td>{{ $patient->email }}</td>
+                        <td>{{ $data->patient_email }}</td>
                         <td>Jenis Kelamin</td>
-                        <td>{{ $patient->gender_name }}</td>
+                        <td>{{ $data->patient_gender }}</td>
                     </tr>
                     <tr>
                         <td>Alamat</td>
-                        <td>{{ $patient->address }}</td>
+                        <td>{{ $data->patient_address }}</td>
                         <td>Phone</td>
-                        <td>{{ $patient->phone }}</td>
+                        <td>{{ $data->patient_phone }}</td>
                     </tr>
                 </table>
             </div>
@@ -76,7 +77,7 @@
                     <tr>
                         <td>Nama Penyakit</td>
                     </tr>
-                    @foreach($cormobids as $cormobid)
+                    @foreach(json_decode($data->cormobids) as $cormobid)
                     <tr>
                         <td>{{ $cormobid->name }}</td>
                     </tr>
@@ -90,7 +91,7 @@
                 <table class="table table-bordered table-sm">
                     <tr>
                         <td>Nama Penyakit</td>
-                        <td>{{ $staff->name }}</td>
+                        <td>{{ $data->staff_name }}</td>
                     </tr>
                     <tr>
                         <td>Di Cetak Pada</td>
