@@ -205,7 +205,24 @@ class IsolationController extends Controller
 			$stats[$todo_category->id]['label'] = [];
 			$stats[$todo_category->id]['value'] = [];
 
-			$newStats = DB::select('SELECT todo_types.name, count(todo_types.name) as total FROM `todos` JOIN todo_types ON todo_types.id = todos.todo_type_id JOIN `days` ON todos.day_id = `days`.id WHERE `days`.journal_id = ? AND todos.todo_category_id = ? AND todos.status = 1 GROUP BY todo_types.name', [$id, $todo_category->id]);
+			$newStats = DB::select('
+                SELECT 
+                    todo_types.name,
+                    count(todo_types.name) as total
+                FROM 
+                    `todos` 
+                JOIN 
+                    todo_types ON todo_types.id = todos.todo_type_id
+                JOIN 
+                    `days` ON todos.day_id = `days`.id
+                WHERE 
+                    `days`.journal_id = ? 
+                AND
+                    todos.todo_category_id = ? 
+                AND
+                     todos.status = 1
+                GROUP BY 
+                    todo_types.name', [$id, $todo_category->id]);
 			
 			foreach($newStats as $key => $value){
 				$stats[$todo_category->id]['label'][] = $value->name;
@@ -260,13 +277,32 @@ class IsolationController extends Controller
 
     public function certificate(Request $request, $id)
     {
-        $journal    = Journal::with(['test', 'day'])->findOrFail($id);
-        $patient    = Patient::with('staff', 'hospital')->findOrFail($journal->patient_id);
+        /* $journal    = Journal::with(['test', 'day'])->findOrFail($id);
+        $patient    = Patient::with('staff', 'hospital')->findOrFail($journal->patient_id); */
 
-        $name =  $patient->name;
+        $journal = DB::select('
+            SELECT 
+                journals.id as journal_id,
+                journals.status as journal_status,
+                journals.start as journal_start,
+                journals.end as journal_end,
+
+                patients.name as patient_name
+            FROM
+                journals
+            LEFT JOIN
+                patients ON journals.patient_id = patients.id
+            WHERE
+                journals.id = ?
+        ', [$id]); 
+
+        $journal = collect($journal)->first();
+
+
+        $name =  $journal->patient_name;
         $name_len = strlen($name);
 
-         $occupation = $this->dateIndo(date("d-m-Y", strtotime($journal->start)))." - ".$this->dateIndo(date("d-m-Y", strtotime($journal->end)));
+         $occupation = $this->dateIndo(date("d-m-Y", strtotime($journal->journal_start)))." - ".$this->dateIndo(date("d-m-Y", strtotime($journal->journal_end)));
 
         if ($occupation) {
           $font_size_occupation = 20;
@@ -277,7 +313,7 @@ class IsolationController extends Controller
         $createimage = imagecreatefrompng($image);
 
         //this is going to be created once the generate button is clicked
-        $output_path = "certificate/certificate-" . $journal->id . ".png";
+        $output_path = "certificate/certificate-" . $journal->journal_id . ".png";
         $output = $output_path;
 
         //then we make use of the imagecolorallocate inbuilt php function which i used to set color to the text we are displaying on the image in RGB format
@@ -319,7 +355,7 @@ class IsolationController extends Controller
         $drFont = storage_path('certificate/developer.ttf');
 
         // font directory for occupation name
-        $drFont1 = storage_path('certificate/Gotham-black.otf');
+        $drFont1 = storage_path('certificate/gotham-black.otf');
 
         //function to display name on certificate picture
         $text1 = imagettftext($createimage, $font_size, $rotation, $origin_x, $origin_y, $black, $drFont, $certificate_text);
@@ -329,24 +365,24 @@ class IsolationController extends Controller
 
         imagepng($createimage, $output, 3);
 
-         return view('staff.isolation.certificate', compact(['output_path']));
+        return view('staff.isolation.certificate', compact(['journal', 'output_path']));
     }
 
     public function dateIndo($tanggal){
 
         $bulan = array (
-            1 =>   'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 =>  'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
         );
 
         $pecahkan = explode('-', $tanggal);
