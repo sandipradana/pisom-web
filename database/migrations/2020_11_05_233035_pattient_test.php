@@ -15,12 +15,13 @@ class PattientTest extends Migration
     {
         Schema::create('patient_tests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("patient_id")->length(9);
-            $table->unsignedInteger("test_type_id")->length(5);
+            $table->unsignedInteger("patient_id");
+            $table->unsignedInteger("test_type_id");
             $table->date("date");
-            $table->unsignedTinyInteger("result");
-            $table->unsignedTinyInteger("case");
-            $table->unsignedTinyInteger("journal")->default(0);
+            $table->boolean("result");
+            $table->boolean("case");
+            $table->boolean("journal");
+            $table->string("document");
             $table->timestamps();
             $table->softDeletes();
         });

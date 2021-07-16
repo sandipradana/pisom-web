@@ -28,7 +28,7 @@ class PatientFactory extends Factory
             'name' => $this->faker->name,
             'password' => Hash::make('password'),
             'email' => $this->faker->email,
-            'phone' => $this->faker->phoneNumber,
+            'phone' => str_replace([' ', '(', ')'], [''], $this->faker->phoneNumber),
             'address' => $this->faker->address,
             'date_of_birth' => $this->faker->dateTimeThisCentury->format('Y-m-d'),
             'hospital_id' => "1",

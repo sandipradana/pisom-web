@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
 
         $hospital = new Hospital();
         $hospital->name = "Pertamedika";
+        $hospital->email = "admin@pertamedika.com";
         $hospital->address = "Jakarta Selatan";
         $hospital->phone = "021234567890";
         $hospital->save();
