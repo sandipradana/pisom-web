@@ -8,6 +8,7 @@ use App\DataTables\StaffDataTable as MainDataTable;
 use App\Models\Hospital;
 use App\Models\Staff;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class StaffController extends Controller
 {
@@ -30,6 +31,18 @@ class StaffController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email'     => ['required', 'string', 'email', 'unique:staffs'],
+            'password'  => ['required', 'string'],
+            'phone'     => ['required'],
+            'name'      => ['required'],
+            'hospital_id'     => ['required', 'exists:hospitals,id'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $staff = new Staff();
 
         $staff->name        = $request->name;

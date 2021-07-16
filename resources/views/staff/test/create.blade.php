@@ -7,7 +7,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>Kode Pasien</label>
@@ -40,6 +40,10 @@
                             <option value="1">OTG</option>
                             <option value="2">Ringan</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Dokumen</label>
+                        <input class="form-control" type="file" name="doc">
                     </div>
                     <div class="form-group">
                         <label>Keterangan</label>

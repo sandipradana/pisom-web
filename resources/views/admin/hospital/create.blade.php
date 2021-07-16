@@ -21,6 +21,10 @@
                         <label>Telepon</label>
                         <input name="phone" type="text" class="form-control" placeholder="Phone">
                     </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input name="email" type="text" class="form-control" placeholder="Email">
+                    </div>
                     <button type="submit" class="btn btn-danger">Simpan</button>
                 </form>
             </div>

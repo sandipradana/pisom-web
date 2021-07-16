@@ -14,12 +14,12 @@ class Days extends Migration
     public function up()
     {
         Schema::create('days', function (Blueprint $table) {
-            $table->id();
-            $table->string("name", 255);
-            $table->string("date", 255);
-            $table->integer("journal_id");
-            $table->integer("symptom_status");
-            $table->integer("todo_status");
+            $table->id();  // big integer, cocok untuk transaksi
+            $table->string("name", 12); //Hari ke - 10
+            $table->date("date");
+            $table->unsignedBigInteger("journal_id");
+            $table->boolean("symptom_status");
+            $table->boolean("todo_status");
             $table->timestamps();
             $table->softDeletes();
         });

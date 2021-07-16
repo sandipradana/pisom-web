@@ -17,10 +17,10 @@ class Journals extends Migration
 
         Schema::create('journals', function (Blueprint $table) {
             $table->id();
-            $table->integer("patient_id");
-            $table->integer("staff_id");
-            $table->integer("patient_test_id");
-            $table->integer("status");
+            $table->unsignedInteger("patient_id");
+            $table->unsignedInteger("staff_id");
+            $table->unsignedBigInteger("patient_test_id");
+            $table->boolean("status");
             $table->date("start");
             $table->date("end");
             $table->timestamps();

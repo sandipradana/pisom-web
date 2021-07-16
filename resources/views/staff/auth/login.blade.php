@@ -32,6 +32,15 @@
                 </div>
                 <form action="{{ route('staff.auth.login.action') }}" method="post">
                     {{ csrf_field() }}
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="input-group mb-3">
                         <input name="email" type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">

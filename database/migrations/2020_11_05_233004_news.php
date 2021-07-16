@@ -14,10 +14,10 @@ class News extends Migration
     public function up()
     {
         Schema::create('news', function (Blueprint $table) {
-            $table->id();
+            $table->increments("id");
             $table->string("title");
             $table->text("content");
-            $table->integer("category_id");
+            $table->unsignedInteger("category_id");
             $table->string("thumbnail");
             $table->boolean("featured")->default(false);
             $table->date("date");

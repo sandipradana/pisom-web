@@ -27,11 +27,15 @@ class NewsCategoryController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => ['required', 'max:200'],
+        ]);
+
         $category           = new NewsCategory();
         $category->name     = $request->name;
         $category->save();
 
-        return redirect()->route('admin.newscategory.show', $category->id);
+        return redirect()->route('admin.news.category.show', $category->id);
     }
 
     public function show($id)
@@ -48,6 +52,10 @@ class NewsCategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => ['required', 'max:200'],
+        ]);
+        
         $category = NewsCategory::findOrFail($id);
 
         $category->name     = $request->name;

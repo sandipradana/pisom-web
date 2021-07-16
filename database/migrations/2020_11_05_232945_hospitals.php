@@ -14,10 +14,11 @@ class Hospitals extends Migration
     public function up()
     {
         Schema::create('hospitals', function (Blueprint $table) {
-            $table->id();
+            $table->increments("id"); // 32770
             $table->string("name");
+            $table->string("email");
             $table->string("address");
-            $table->string("phone");
+            $table->string("phone", 15);
             $table->timestamps();
             $table->softDeletes();
         });

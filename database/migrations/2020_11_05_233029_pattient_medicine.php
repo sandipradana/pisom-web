@@ -15,8 +15,8 @@ class PattientMedicine extends Migration
     {
         Schema::create('patient_medicines', function (Blueprint $table) {
             $table->id();
-            $table->integer("patient_id");
-            $table->integer("medicine_id");
+            $table->unsignedInteger("patient_id")->length(9);
+            $table->unsignedInteger("medicine_id")->length(5);
             $table->timestamps();
             $table->softDeletes();
         });

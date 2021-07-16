@@ -12,6 +12,8 @@ use App\Models\Patient;
 use App\Models\Staff;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class TestController extends Controller
 {
@@ -34,12 +36,31 @@ class TestController extends Controller
 
     public function store(Request $request){
 
+        $validator = Validator::make($request->all(), [
+            'patient_id' => ['required', 'exists:patients,id'],
+            'test_type_id' => ['required', 'exists:test_types,id'],
+            'result' => ['required', Rule::in([1, 2, 3])],
+            'case' => ['required', Rule::in([0, 1, 2])],
+            'doc' => 'file|image|mimes:jpeg,png,jpg,pdf|max:2048',
+		]);
+
+        $doc = $request->file('doc');
+        if($thumbnail != null){
+            $filename = time()."_".$thumbnail->getClientOriginalName();
+            $thumbnail->move('tests', $filename);
+        }
+
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
+		}
+
         $patient_test = new PatientTest();
         $patient_test->patient_id    = $request->patient_id;
         $patient_test->test_type_id  = $request->test_type_id;
         $patient_test->result        = $request->result;
         $patient_test->date          = date("Y-m-d");
         $patient_test->case          = $request->case;
+        $patient_test->doc           = $filename;
         $patient_test->save();
 
         return redirect()->route('staff.test.detail', $patient_test->id);

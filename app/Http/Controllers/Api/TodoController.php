@@ -8,6 +8,7 @@ use App\Models\TodoCategory;
 use App\Models\TodoType;
 use App\Models\Todo;
 use App\Models\Day;
+use App\Models\Journal;
 
 class TodoController extends Controller
 {
@@ -41,16 +42,27 @@ class TodoController extends Controller
     }
 
     public function update(Request $request){
-        
+
         $todo = Todo::find($request->id);
         $todo->status = $request->status;
-        $todo->save();
 
         $day = Day::find($todo->day_id);
         $day->todo_status = 1;
+        
+        if($day->date != date("Y-m-d")){
+            return ['status' => 200, 'data' => ""];
+        }
 
         $todo->save();
         $day->save();
+
+        $days = Day::where('journal_id', $day->journal_id)->count();
+        if($days >= 10){
+            $journal = Journal::find($day->journal_id);
+            $journal->status = 1;
+            $journal->save();
+        }
+
 
         return ['status' => 200, 'data' => $todo];
     }

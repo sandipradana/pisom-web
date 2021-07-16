@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/adminlte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
     <link rel="stylesheet" href="/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="/adminlte/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/adminlte/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" href="/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <link rel="stylesheet" href="/adminlte/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -120,8 +121,18 @@
     <script src="/adminlte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
     <script src="/adminlte/plugins/chart.js/Chart.min.js"></script>
     <script src="/assets/js/print.min.js"></script>
+    <script src="/adminlte/plugins/toastr/toastr.min.js"></script>
     <script src="/adminlte/dist/js/adminlte.min.js"></script>
     @stack('scripts')
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr.error('{{ $error }}')
+            @endforeach
+        </script>
+    </div>
+    @endif
 </body>
 
 </html>

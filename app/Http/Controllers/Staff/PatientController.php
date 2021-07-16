@@ -22,6 +22,7 @@ use App\Models\PatientMedicine;
 use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
 use Menu;
+use Illuminate\Support\Facades\Validator;
 
 class PatientController extends Controller
 {
@@ -54,6 +55,18 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+			'name' => ['required', 'string'],
+			'email' => ['required', 'string', 'email', 'unique:patients'],
+			'password' => ['required', 'string'],
+			'phone' => ['required', 'string', 'unique:patients'],
+			'address' => ['required', 'string'],
+            'date_of_birth' => ['before_or_equal:'.date('Y-m-d').'']
+		]);
+
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
+		}
 
         $patient = new Patient();
         $patient->name          = $request->name;

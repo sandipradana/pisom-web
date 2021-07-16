@@ -36,12 +36,15 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Guest', 'as' => 'guest.'],
 
         ', [date('Y-m-d')]);
 
+        $results = array();
+        $i=0;
         foreach($remembers as $remember) {
             $message = CloudMessage::withTarget("token", $remember->firebase_token)->withNotification(Notification::create('Pengingat', 'Jangan lupa untuk isi aktifitas dan check gejalanya'));
-            $messaging->send($message);
+            $results[$i] = $messaging->send($message);
+            $i++;
         }
 
-        return $remembers;
+        return $results;
     });
 
 });

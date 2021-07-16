@@ -30,6 +30,10 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'title' => ['required', 'max:200'],
+            'content' => ['required'],
+            'featured' => ['required'],
+            'category_id' => ['required'],
 			'thumbnail' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         
@@ -65,6 +69,7 @@ class NewsController extends Controller
 
     public function edit($id)
     {
+        
         $news = News::findOrFail($id);
 
         return view('admin.news.show', compact(['news']));
@@ -73,6 +78,10 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'title' => ['required', 'max:200'],
+            'content' => ['required'],
+            'featured' => ['required'],
+            'category_id' => ['required'],
 			'thumbnail' => 'file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 

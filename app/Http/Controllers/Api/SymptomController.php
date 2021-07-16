@@ -43,10 +43,15 @@ class SymptomController extends Controller
         
         $todo = SymptomCheck::find($request->id);
         $todo->status = $request->status;
-		$todo->save();
 		
 		$day = Day::find($todo->day_id);
 		$day->symptom_status = 1;
+
+		if($day->date != date("Y-m-d")){
+            return ['status' => 200, 'data' => ""];
+        }
+
+		$todo->save();
 		$day->save();
 
         return ['status' => 200, 'data' => $todo];

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="/assets/css/jquery-jvectormap-2.0.5.css">
+    <link rel="stylesheet" href="/adminlte/plugins/toastr/toastr.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 
@@ -116,8 +117,18 @@
     <script src="/adminlte/plugins/chart.js/Chart.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery-jvectormap-2.0.5.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.vmap.indonesia.js" charset="utf-8"></script>
+    <script src="/adminlte/plugins/toastr/toastr.min.js"></script>
     <script src="/adminlte/dist/js/adminlte.min.js"></script>
     @stack('scripts')
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr.error('{{ $error }}')
+            @endforeach
+        </script>
+    </div>
+    @endif
 </body>
 
 </html>

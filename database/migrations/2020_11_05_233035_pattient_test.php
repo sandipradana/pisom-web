@@ -15,8 +15,8 @@ class PattientTest extends Migration
     {
         Schema::create('patient_tests', function (Blueprint $table) {
             $table->id();
-            $table->integer("patient_id");
-            $table->integer("test_type_id");
+            $table->unsignedInteger("patient_id")->length(9);
+            $table->unsignedInteger("test_type_id")->length(5);
             $table->date("date");
             $table->unsignedTinyInteger("result");
             $table->unsignedTinyInteger("case");

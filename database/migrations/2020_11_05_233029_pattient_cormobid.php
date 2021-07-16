@@ -15,8 +15,8 @@ class PattientCormobid extends Migration
     {
         Schema::create('patient_cormobids', function (Blueprint $table) {
             $table->id();
-            $table->integer("patient_id");
-            $table->integer("cormobid_id");
+            $table->unsignedInteger("patient_id")->length(9);
+            $table->unsignedInteger("cormobid_id")->length(5);
             $table->timestamps();
             $table->softDeletes();
         });

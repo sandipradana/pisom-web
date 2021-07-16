@@ -14,12 +14,12 @@ class Staffs extends Migration
     public function up()
     {
         Schema::create('staffs', function (Blueprint $table) {
-            $table->id();
+            $table->increments("id"); // 106006125
             $table->string("name");
             $table->string("email");
-            $table->string("password");
-            $table->string("phone", 12);
-            $table->string("hospital_id");
+            $table->string("password", 60);
+            $table->string("phone", 15); // +62822321718001
+            $table->unsignedInteger("hospital_id")->lengh(9);
             $table->timestamps();
             $table->softDeletes();
         });

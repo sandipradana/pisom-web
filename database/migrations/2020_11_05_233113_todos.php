@@ -15,10 +15,10 @@ class Todos extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->integer("todo_type_id");
-            $table->integer("todo_category_id");
+            $table->unsignedInteger("todo_type_id");
+            $table->unsignedInteger("todo_category_id");
             $table->string("data")->nullable();
-            $table->integer("day_id");
+            $table->unsignedBigInteger("day_id");
             $table->boolean("status");
             $table->timestamps();
             $table->softDeletes();

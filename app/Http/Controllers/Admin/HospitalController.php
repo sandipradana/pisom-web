@@ -33,6 +33,7 @@ class HospitalController extends Controller
         $hospital->name        = $request->name;
         $hospital->address     = $request->address;
         $hospital->phone       = $request->phone;
+        $hospital->email       = $request->email;
 
         $hospital->save();
 
@@ -59,6 +60,7 @@ class HospitalController extends Controller
         $hospital->name        = $request->name;
         $hospital->address     = $request->address;
         $hospital->phone       = $request->phone;
+        $hospital->email      = $request->email;
         
         $hospital->save();
 

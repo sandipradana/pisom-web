@@ -14,8 +14,8 @@ class TodoType extends Migration
     public function up()
     {
         Schema::create('todo_types', function (Blueprint $table) {
-            $table->id();
-            $table->integer("todo_category_id");
+            $table->increments("id");
+            $table->unsignedInteger("todo_category_id");
             $table->string("name");
             $table->string("description");
             $table->boolean("mandatory");

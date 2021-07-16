@@ -14,10 +14,10 @@ class Admins extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+            $table->increments("id"); // 32770
             $table->string("name");
             $table->string("email");
-            $table->string("password");
+            $table->string("password", 60);
             $table->string("phone", 15);
             $table->timestamps();
             $table->softDeletes();

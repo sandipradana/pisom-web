@@ -14,7 +14,7 @@ class Cormodbids extends Migration
     public function up()
     {
         Schema::create('cormobids', function (Blueprint $table) {
-            $table->id();
+            $table->increments("id"); 
             $table->string("name", 255);
             $table->timestamps();
             $table->softDeletes();
